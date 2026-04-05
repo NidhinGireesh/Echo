@@ -45,34 +45,80 @@ export const projects = [
         tags: ["React", "Python", "ML"],
         seller: "Arjun Das",
         college: "CET",
-        category: "AI/ML",
-        featured: true
+        category: "Machine Learning",
+        featured: true,
+        type: "Full Project"
     },
     {
         id: 2,
-        title: "Smart Waste Management IoT",
-        price: "₹3,499",
-        rating: 4.5,
-        reviews: 12,
-        image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=2070&auto=format&fit=crop",
-        tags: ["Arduino", "Node.js", "Firebase"],
-        seller: "Meera Nair",
-        college: "TKM",
-        category: "IoT",
-        featured: false
+        title: "Modern SaaS UI Kit",
+        price: "₹1,499",
+        rating: 4.7,
+        reviews: 18,
+        image: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=2070&auto=format&fit=crop",
+        tags: ["Figma", "React", "Tailwind"],
+        seller: "Deepa Nair",
+        college: "MEC",
+        category: "UI Kit",
+        featured: true,
+        type: "Asset"
     },
     {
         id: 3,
-        title: "Blockchain Voting System",
-        price: "₹5,999",
+        title: "Indian Road Traffic Dataset",
+        price: "₹2,499",
         rating: 4.9,
-        reviews: 30,
-        image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2232&auto=format&fit=crop",
-        tags: ["Solidity", "React", "Ether.js"],
+        reviews: 42,
+        image: "https://images.unsplash.com/photo-1566616213894-2d4e1ad9531a?q=80&w=2070&auto=format&fit=crop",
+        tags: ["CSV", "Images", "JSON"],
         seller: "Rahul K",
         college: "CUSAT",
-        category: "Blockchain",
-        featured: true
+        category: "ML Dataset",
+        featured: true,
+        type: "Asset"
+    },
+    {
+        id: 4,
+        title: "Paytm Gateway API Wrapper",
+        price: "₹999",
+        rating: 4.6,
+        reviews: 15,
+        image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070&auto=format&fit=crop",
+        tags: ["Node.js", "SDK", "API"],
+        seller: "Aditya S",
+        college: "TKM",
+        category: "API Wrapper",
+        featured: false,
+        type: "Asset"
+    }
+];
+
+export const users = [
+    {
+        id: "u1",
+        name: "Arjun Das",
+        role: "Student",
+        techStack: ["React", "Python", "ML"],
+        college: "CET Trivandrum",
+        points: 4500,
+        badges: ["Top Seller", "Bug Hunter"],
+        proofOfWork: [
+            { id: 1, title: "Agro-Predictor ML Model", type: "ML Model", verified: true },
+            { id: 2, title: "Freelance E-commerce UI", type: "Design", verified: true }
+        ]
+    },
+    {
+        id: "u2",
+        name: "Deepa Nair",
+        role: "Campus Ambassador",
+        techStack: ["UI/UX", "Product Design"],
+        college: "Model Engineering College",
+        points: 8200,
+        badges: ["Silver Ambassador", "Design Guru"],
+        proofOfWork: [
+            { id: 3, title: "SaaS UI Kit", type: "Asset", verified: true },
+            { id: 4, title: "Organized Innovate Kerala", type: "Event", verified: true }
+        ]
     }
 ];
 
@@ -83,3 +129,4 @@ export const leaderboard = [
     { rank: 4, name: "TKM College of Engineering, Kollam", points: 9400, district: "Kollam", students: "4000+" },
     { rank: 5, name: "Government Engineering College, Thrissur", points: 8900, district: "Thrissur", students: "3800+" }
 ];
+

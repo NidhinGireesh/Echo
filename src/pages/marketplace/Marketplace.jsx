@@ -12,15 +12,22 @@ const Marketplace = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [activeCategory, setActiveCategory] = useState('All');
 
-    const categories = ['All', 'Web', 'Mobile', 'AI/ML', 'IoT', 'Blockchain', 'Cybersecurity'];
+    const categories = ['All', 'Machine Learning', 'UI Kit', 'ML Dataset', 'API Wrapper', 'IoT', 'Blockchain'];
+
+    const filteredProjects = projects.filter(project => {
+        const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                            project.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+        const matchesCategory = activeCategory === 'All' || project.category === activeCategory;
+        return matchesSearch && matchesCategory;
+    });
 
     return (
         <div className="container" style={{ padding: '4rem 1.5rem' }}>
             {/* Header */}
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Project <span className="gradient-text">Marketplace</span></h1>
+                <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Asset <span className="gradient-text">Marketplace</span></h1>
                 <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', marginInline: 'auto' }}>
-                    Explore and buy high-quality academic and research projects from top students across Kerala.
+                    Stop rebuilding from scratch. Buy verified UI kits, custom ML datasets, and specialized code modules.
                 </p>
             </div>
 
@@ -39,7 +46,9 @@ const Marketplace = () => {
                     <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                     <input
                         type="text"
-                        placeholder="Search projects (e.g. AI Powered, React App)..."
+                        placeholder="Search assets (e.g. Figma Kit, Traffic Dataset)..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                         style={{
                             width: '100%',
                             padding: '0.75rem 1rem 0.75rem 2.8rem',
@@ -82,7 +91,7 @@ const Marketplace = () => {
                 gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
                 gap: '2.5rem'
             }}>
-                {projects.map((project) => (
+                {filteredProjects.map((project) => (
                     <motion.div
                         key={project.id}
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -92,11 +101,10 @@ const Marketplace = () => {
                         <Card padding="0" hover className="fade-in">
                             <div style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
                                 <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                {project.featured && (
-                                    <div style={{ position: 'absolute', top: '1rem', left: '1rem' }}>
-                                        <Badge variant="gold">Editor's Choice</Badge>
-                                    </div>
-                                )}
+                                <div style={{ position: 'absolute', top: '1rem', left: '1rem', display: 'flex', gap: '0.5rem' }}>
+                                    {project.featured && <Badge variant="gold">Editor's Choice</Badge>}
+                                    <Badge variant="secondary">{project.type}</Badge>
+                                </div>
                                 <div style={{ position: 'absolute', bottom: '1rem', right: '1rem' }}>
                                     <div style={{ background: 'rgba(0,0,0,0.6)', color: 'white', padding: '0.4rem 0.8rem', borderRadius: 'var(--radius-sm)', backdropFilter: 'blur(4px)', fontWeight: '700' }}>
                                         {project.price}
@@ -122,7 +130,7 @@ const Marketplace = () => {
                                     </div>
                                 </div>
                                 <Link to={`/marketplace/${project.id}`}>
-                                    <Button variant="primary" style={{ width: '100%' }}>View Project Details</Button>
+                                    <Button variant="primary" style={{ width: '100%' }}>View Asset Details</Button>
                                 </Link>
                             </div>
                         </Card>
@@ -132,5 +140,6 @@ const Marketplace = () => {
         </div>
     );
 };
+
 
 export default Marketplace;

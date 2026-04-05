@@ -28,31 +28,27 @@ const PricingPage = () => {
             variant: 'secondary'
         },
         {
-            name: 'Silver',
-            price: '₹499',
-            desc: 'Ideal for major college fests',
-            icon: <Zap size={24} color="var(--primary)" />,
+            name: 'Ambassador',
+            price: 'Exclusive',
+            desc: 'For campus leaders & tech clubs',
+            icon: <Badge size={24} color="var(--secondary)" />,
             features: [
-                '3 Active Promotions',
-                'Advanced Analytics',
-                '7-Day Listing Period',
-                'District-wide visibility',
-                'Silver "Trending" Badge',
-                'Push Notifications',
-                'Priority Support'
+                'Premium Platform Access',
+                'Verified Ambassador Badge',
+                'Onboard College Events',
+                'Commission on Asset Sales',
+                'Priority "Proof of Work" Review',
+                'Direct Expert Access'
             ],
-            notIncluded: [
-                'State-wide visibility',
-                'Email Marketing'
-            ],
-            buttonText: 'Choose Silver',
+            notIncluded: [],
+            buttonText: 'Apply Now',
             variant: 'primary',
             recommended: true
         },
         {
             name: 'Gold',
             price: '₹999',
-            desc: 'Maximum reach for major sponsors',
+            desc: 'Maximum reach for major fests',
             icon: <Crown size={24} color="var(--accent)" />,
             features: [
                 'Unlimited Promotions',
@@ -73,11 +69,12 @@ const PricingPage = () => {
     return (
         <div className="container" style={{ padding: '6rem 1.5rem' }}>
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Simple, <span className="gradient-text">Transparent</span> Pricing</h1>
+                <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Unlock Your <span className="gradient-text">Potential</span></h1>
                 <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', marginInline: 'auto' }}>
-                    Choose the right promotion tier for your college event and reach thousands of students across Kerala.
+                    Whether you're promoting a fest, or leading your campus tech community, Echo has the perfect tier for you.
                 </p>
             </div>
+
 
             <div style={{
                 display: 'grid',
