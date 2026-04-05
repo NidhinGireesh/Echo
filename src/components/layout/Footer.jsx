@@ -1,112 +1,83 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Globe, Twitter, Linkedin, Github, Mail, MapPin, Phone } from 'lucide-react';
+import { Cloud, Twitter, Linkedin, Github, Mail, MapPin } from 'lucide-react';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
 
-    const footerStyle = {
-        background: 'var(--bg-surface)',
-        borderTop: '1px solid var(--border)',
-        padding: '4rem 0 2rem 0',
-        marginTop: 'auto',
-    };
-
-    const columnStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1.25rem',
-    };
-
-    const linkStyle = {
-        color: 'var(--text-muted)',
-        fontSize: '0.9rem',
-        transition: 'var(--transition)',
-    };
-
     return (
-        <footer style={footerStyle}>
-            <div className="container">
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                    gap: '3rem',
-                    marginBottom: '3rem'
-                }}>
+        <footer className="relative bg-[#070d1f] border-t border-white/5 pt-20 pb-10 overflow-hidden">
+            {/* Background Blob */}
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full -mr-64 -mb-64 pointer-events-none"></div>
+            
+            <div className="container mx-auto px-6 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
                     {/* Brand Info */}
-                    <div style={{ ...columnStyle, gridColumn: 'span 2' }}>
-                        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                            <div style={{
-                                background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
-                                width: '32px',
-                                height: '32px',
-                                borderRadius: 'var(--radius-sm)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                color: 'white'
-                            }}>
-                                <Globe size={18} />
+                    <div className="md:col-span-4 space-y-6">
+                        <Link to="/" className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-[#070d1f]">
+                                <Cloud size={18} className="fill-current" />
                             </div>
-                            <span style={{ fontSize: '1.25rem', fontWeight: '800' }}>
+                            <span className="text-xl font-headline font-black text-white">
                                 CampusSphere
                             </span>
                         </Link>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', maxWidth: '300px' }}>
-                            Kerala's premier platform for student collaboration, event promotion, and project marketplace. Empowering the next generation of innovators.
+                        <p className="text-on-surface-variant text-sm leading-relaxed max-w-sm">
+                            Kerala's premier ecosystem for student collaboration, event promotion, and digital asset commerce. Empowering the next generation of builders.
                         </p>
-                        <div style={{ display: 'flex', gap: '1rem' }}>
-                            <a href="#" style={linkStyle}><Twitter size={20} /></a>
-                            <a href="#" style={linkStyle}><Linkedin size={20} /></a>
-                            <a href="#" style={linkStyle}><Github size={20} /></a>
+                        <div className="flex gap-4">
+                            {[Twitter, Linkedin, Github].map((Icon, i) => (
+                                <a key={i} href="#" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-primary/10 transition-all border border-white/5">
+                                    <Icon size={18} />
+                                </a>
+                            ))}
                         </div>
                     </div>
 
                     {/* Platform Links */}
-                    <div style={columnStyle}>
-                        <h4 style={{ fontSize: '1rem', fontWeight: '700' }}>Platform</h4>
-                        <Link to="/events" style={linkStyle}>Events</Link>
-                        <Link to="/marketplace" style={linkStyle}>Marketplace</Link>
-                        <Link to="/leaderboard" style={linkStyle}>Leaderboard</Link>
-                        <Link to="/mentors" style={linkStyle}>Mentorship</Link>
+                    <div className="md:col-span-2 space-y-6">
+                        <h4 className="text-white font-bold uppercase tracking-widest text-xs">Platform</h4>
+                        <ul className="space-y-4">
+                            <li><Link to="/discover" className="text-on-surface-variant text-sm hover:text-primary transition-colors">Discover</Link></li>
+                            <li><Link to="/events" className="text-on-surface-variant text-sm hover:text-primary transition-colors">Events</Link></li>
+                            <li><Link to="/marketplace" className="text-on-surface-variant text-sm hover:text-primary transition-colors">Marketplace</Link></li>
+                            <li><Link to="/leaderboard" className="text-on-surface-variant text-sm hover:text-primary transition-colors">Leaderboard</Link></li>
+                        </ul>
                     </div>
 
-                    {/* Support Links */}
-                    <div style={columnStyle}>
-                        <h4 style={{ fontSize: '1rem', fontWeight: '700' }}>Resources</h4>
-                        <Link to="/how-it-works" style={linkStyle}>How it Works</Link>
-                        <Link to="/pricing" style={linkStyle}>Pricing</Link>
-                        <Link to="/faq" style={linkStyle}>FAQ</Link>
-                        <Link to="/contact" style={linkStyle}>Contact Us</Link>
+                    {/* Resources */}
+                    <div className="md:col-span-2 space-y-6">
+                        <h4 className="text-white font-bold uppercase tracking-widest text-xs">Resources</h4>
+                        <ul className="space-y-4">
+                            <li><Link to="/pricing" className="text-on-surface-variant text-sm hover:text-primary transition-colors">Pricing</Link></li>
+                            <li><Link to="/faq" className="text-on-surface-variant text-sm hover:text-primary transition-colors">Support Hub</Link></li>
+                            <li><Link to="/terms" className="text-on-surface-variant text-sm hover:text-primary transition-colors">Terms</Link></li>
+                        </ul>
                     </div>
 
                     {/* Contact Info */}
-                    <div style={columnStyle}>
-                        <h4 style={{ fontSize: '1rem', fontWeight: '700' }}>Contact</h4>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                            <MapPin size={16} /> Thiruvananthapuram, Kerala
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                            <Mail size={16} /> hello@campussphere.in
+                    <div className="md:col-span-4 space-y-6">
+                        <h4 className="text-white font-bold uppercase tracking-widest text-xs">Headquarters</h4>
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-3 text-on-surface-variant text-sm">
+                                <MapPin size={16} className="text-primary" />
+                                <span>Thiruvananthapuram, Kerala, India</span>
+                            </div>
+                            <div className="flex items-center gap-3 text-on-surface-variant text-sm underline group cursor-pointer decoration-white/10 hover:decoration-primary/40">
+                                <Mail size={16} className="text-primary" />
+                                <span>hello@campussphere.in</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div style={{
-                    borderTop: '1px solid var(--border)',
-                    paddingTop: '2rem',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    flexWrap: 'wrap',
-                    gap: '1rem'
-                }}>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
-                        &copy; {currentYear} CampusSphere Platform. All rights reserved.
+                <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <p className="text-on-surface-variant text-xs font-medium">
+                        &copy; {currentYear} CampusSphere Digital. Built for the Astral.
                     </p>
-                    <div style={{ display: 'flex', gap: '1.5rem' }}>
-                        <Link to="/privacy" style={{ ...linkStyle, fontSize: '0.8rem' }}>Privacy Policy</Link>
-                        <Link to="/terms" style={{ ...linkStyle, fontSize: '0.8rem' }}>Terms of Service</Link>
+                    <div className="flex gap-8">
+                        <Link to="/privacy" className="text-on-surface-variant text-xs hover:text-white transition-colors">Privacy Strategy</Link>
+                        <Link to="/security" className="text-on-surface-variant text-xs hover:text-white transition-colors">Security Audit</Link>
                     </div>
                 </div>
             </div>

@@ -1,14 +1,45 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>campussphere</title>
+  <title>CampusSphere | The Digital Astral</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#070d1f",
+            "on-surface": "#dfe4fe",
+            "primary": "#85adff",
+            "secondary": "#c180ff",
+            "tertiary": "#ff6daf",
+            "primary-fixed": "#6e9fff",
+            "on-surface-variant": "#a5aac2",
+            "surface-container-high": "#171f36",
+            "surface-container-highest": "#1c253e",
+            "outline-variant": "#41475b",
+          },
+          fontFamily: {
+            headline: ["Manrope"],
+            body: ["Inter"],
+          },
+        },
+      },
+    }
+  </script>
 </head>
 
-<body>
+<body class="bg-surface text-on-surface font-body">
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

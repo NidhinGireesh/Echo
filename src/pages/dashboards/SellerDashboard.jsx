@@ -1,95 +1,116 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { DollarSign, Package, ShoppingCart, BarChart3, Plus, ArrowUpRight, Download } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import Badge from '../../components/ui/Badge';
-import Button from '../../components/ui/Button';
+import React, { useEffect } from 'react';
 
 const SellerDashboard = () => {
+    useEffect(() => {
+        const glow = document.getElementById('cursor-glow');
+        if (!glow) return;
+        
+        const handleMouseMove = (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
     return (
-        <div className="container" style={{ padding: '2rem 1.5rem' }}>
-            <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+        <div className="flex-1 p-6 lg:p-10 max-w-7xl mx-auto w-full relative selection:bg-tertiary/20">
+            {/* Interactive Cursor Glow */}
+            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-tertiary/10 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
+
+            <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
                 <div>
-                    <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Seller Hub</h1>
-                    <p style={{ color: 'var(--text-muted)' }}>Manage your project listings and monitor your revenue.</p>
+                    <h1 className="text-4xl font-black font-headline tracking-tight text-white mb-2">Seller Forge</h1>
+                    <p className="text-on-surface-variant font-medium opacity-60">Architect your assets and monetize your innovation.</p>
                 </div>
-                <Button size="lg">
-                    <Plus size={18} style={{ marginRight: '0.5rem' }} /> Add New Project
-                </Button>
+                <button className="bg-primary text-[#070d1f] px-8 py-4 rounded-2xl flex items-center gap-3 text-xs font-black uppercase tracking-[0.2em] shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                    <span className="material-symbols-outlined font-black">rocket_launch</span>
+                    Forge New Project
+                </button>
             </header>
 
             {/* Revenue Snapshot */}
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem', marginBottom: '3rem' }}>
-                <Card padding="2rem" style={{ background: 'linear-gradient(135deg, var(--bg-surface), var(--primary-glow))' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
-                        <div>
-                            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Total Revenue</p>
-                            <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--primary)' }}>₹24,500</h2>
-                        </div>
-                        <div style={{ padding: '0.75rem', background: 'var(--bg-main)', borderRadius: 'var(--radius-md)', color: 'var(--primary)' }}>
-                            <DollarSign size={24} />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+                <div className="lg:col-span-2 glass-panel p-8 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <span className="material-symbols-outlined text-9xl">payments</span>
+                    </div>
+                    <div className="relative z-10">
+                        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-variant mb-6">Aggregate Revenue</p>
+                        <h2 className="text-6xl font-black font-headline text-white mb-8 tracking-tighter">₹24,500 <span className="text-primary text-2xl font-black ml-2">🜚</span></h2>
+                        <div className="flex flex-wrap gap-8">
+                            <div>
+                                <p className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant mb-1">Cycle Yield</p>
+                                <div className="text-xl font-black text-secondary">+₹8,200</div>
+                            </div>
+                            <div className="w-px h-10 bg-white/5"></div>
+                            <div>
+                                <p className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant mb-1">Total Orders</p>
+                                <div className="text-xl font-black text-white">12</div>
+                            </div>
+                            <div className="w-px h-10 bg-white/5"></div>
+                            <div>
+                                <p className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant mb-1">Trust Score</p>
+                                <div className="text-xl font-black text-tertiary">4.8 ★</div>
+                            </div>
                         </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '2rem' }}>
-                        <div>
-                            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>This Month</span>
-                            <div style={{ fontWeight: '700', fontSize: '1.1rem' }}>₹8,200 <ArrowUpRight size={14} color="var(--secondary)" /></div>
-                        </div>
-                        <div>
-                            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Orders</span>
-                            <div style={{ fontWeight: '700', fontSize: '1.1rem' }}>12</div>
-                        </div>
-                        <div>
-                            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Avg. Rating</span>
-                            <div style={{ fontWeight: '700', fontSize: '1.1rem' }}>4.8 ★</div>
-                        </div>
-                    </div>
-                </Card>
-
-                <Card padding="2rem">
-                    <h3 style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>Quick Actions</h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <Button variant="outline" style={{ justifyContent: 'flex-start' }}><Download size={16} /> Download Sales Report</Button>
-                        <Button variant="outline" style={{ justifyContent: 'flex-start' }}><BarChart3 size={16} /> View Detailed Analytics</Button>
-                        <Button variant="outline" style={{ justifyContent: 'flex-start' }}><Package size={16} /> Bulk Upload Files</Button>
-                    </div>
-                </Card>
-            </div>
-
-            {/* Project Listings */}
-            <section>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                    <h2 style={{ fontSize: '1.5rem' }}>Your Project Listings</h2>
-                    <Badge variant="primary">5 Active Projects</Badge>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                <div className="glass-panel p-8 flex flex-col justify-between">
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-variant mb-8">Forge Actions</h3>
+                    <div className="space-y-3">
+                        <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:border-primary/30 transition-all group">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-white">Yield Report</span>
+                            <span className="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">download</span>
+                        </button>
+                        <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:border-primary/30 transition-all group">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-white">Deep Analytics</span>
+                            <span className="material-symbols-outlined text-secondary group-hover:translate-x-1 transition-transform">bar_chart</span>
+                        </button>
+                        <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:border-primary/30 transition-all group">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-white">Bulk Transmit</span>
+                            <span className="material-symbols-outlined text-tertiary group-hover:translate-x-1 transition-transform">inventory_2</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Project Forge Listings */}
+            <section className="pb-20">
+                <div className="flex justify-between items-center mb-8">
+                    <h2 className="text-2xl font-black font-headline text-white tracking-tight">Active Artifacts</h2>
+                    <span className="bg-primary/20 text-primary text-[10px] px-3 py-1 rounded-full border border-primary/30 font-black tracking-widest uppercase mb-2">5 DEPLOYED</span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {[
-                        { title: 'AI Agro Predictor', price: '₹4,999', sales: '8', views: '450', status: 'Active' },
-                        { title: 'Smart Waste IoT', price: '₹3,499', sales: '4', views: '280', status: 'Active' },
-                        { title: 'Blockchain Vote', price: '₹5,999', sales: '0', views: '120', status: 'Review' }
+                        { title: 'K-Rail Tracker MVP', price: '₹4,999', sales: '8', views: '450', status: 'Live', color: 'text-primary' },
+                        { title: 'Kerala Tourism UI Kit', price: '₹3,499', sales: '4', views: '280', status: 'Live', color: 'text-primary' },
+                        { title: 'KTU Result Scraper', price: '₹5,999', sales: '0', views: '120', status: 'Review', color: 'text-secondary' }
                     ].map((project, i) => (
-                        <Card key={i} padding="1.5rem">
-                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                                <Badge variant={project.status === 'Active' ? 'success' : 'warning'}>{project.status}</Badge>
-                                <div style={{ fontSize: '1.1rem', fontWeight: '800' }}>{project.price}</div>
+                        <div key={i} className="glass-panel p-6 hover:translate-y-[-4px] transition-transform group">
+                            <div className="flex justify-between items-start mb-6">
+                                <span className={`text-[8px] font-black px-2 py-1 bg-white/5 border border-white/10 rounded-md uppercase tracking-widest ${project.color}`}>{project.status}</span>
+                                <div className="text-xl font-black text-white">{project.price}</div>
                             </div>
-                            <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>{project.title}</h3>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
-                                <div style={{ padding: '0.75rem', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
-                                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Sales</div>
-                                    <div style={{ fontWeight: '700' }}>{project.sales}</div>
+                            <h3 className="text-lg font-black text-white mb-6 font-headline tracking-tighter group-hover:text-primary transition-colors">{project.title}</h3>
+                            <div className="grid grid-cols-2 gap-4 mb-8">
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 text-center">
+                                    <p className="text-[8px] font-black text-on-surface-variant uppercase tracking-widest mb-1">Acquisitions</p>
+                                    <p className="text-lg font-black text-white">{project.sales}</p>
                                 </div>
-                                <div style={{ padding: '0.75rem', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
-                                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Views</div>
-                                    <div style={{ fontWeight: '700' }}>{project.views}</div>
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 text-center">
+                                    <p className="text-[8px] font-black text-on-surface-variant uppercase tracking-widest mb-1">Visuals</p>
+                                    <p className="text-lg font-black text-white">{project.views}</p>
                                 </div>
                             </div>
-                            <div style={{ display: 'flex', gap: '0.75rem' }}>
-                                <Button variant="secondary" size="sm" style={{ flex: 1 }}>Edit</Button>
-                                <Button variant="outline" size="sm" style={{ flex: 1 }}>Stats</Button>
+                            <div className="flex gap-3">
+                                <button className="flex-1 py-3 rounded-xl bg-white/5 border border-white/5 text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all">Edit Arch</button>
+                                <button className="flex-1 py-3 rounded-xl bg-white/5 border border-white/5 text-[10px] font-black uppercase tracking-widest hover:border-primary/40 transition-all">Stats</button>
                             </div>
-                        </Card>
+                        </div>
                     ))}
                 </div>
             </section>

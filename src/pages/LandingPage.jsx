@@ -1,234 +1,113 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, Megaphone, ShoppingBag, Users, Trophy } from 'lucide-react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../components/ui/Button';
-import Card from '../components/ui/Card';
-import Badge from '../components/ui/Badge';
-import { events, projects, leaderboard } from '../data/mockData';
+import { projects } from '../data/mockData';
 
 const LandingPage = () => {
+    useEffect(() => {
+        const glow = document.getElementById('landing-cursor-glow');
+        if (!glow) return;
+        
+        const handleMouseMove = (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
     return (
-        <div className="landing-page">
+        <div className="min-h-screen relative overflow-hidden bg-[#070d1f] text-white selection:bg-primary/30">
+            {/* Interactive Cursor Glow */}
+            <div id="landing-cursor-glow" className="fixed top-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full pointer-events-none z-[0] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[100px]"></div>
+
+            {/* Background Liquid Orbs */}
+            <div className="fixed inset-0 pointer-events-none z-0 opacity-40">
+                <div className="absolute w-[500px] h-[500px] bg-primary/10 rounded-full top-[-10%] left-[-10%] blur-[120px] animate-pulse"></div>
+                <div className="absolute w-[600px] h-[600px] bg-secondary/10 rounded-full bottom-[-20%] right-[-10%] blur-[120px] animate-pulse" style={{animationDelay: '-5s'}}></div>
+            </div>
+
             {/* Hero Section */}
-            <section style={{
-                padding: '6rem 0 4rem 0',
-                textAlign: 'center',
-                background: 'radial-gradient(circle at top right, var(--primary-glow), transparent), radial-gradient(circle at bottom left, var(--secondary-glow), transparent)',
-            }}>
-                <div className="container">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        <Badge variant="primary" className="fade-in" style={{ marginBottom: '1.5rem' }}>
-                            <Sparkles size={14} style={{ marginRight: '0.5rem' }} />
-                            Kerala's Largest Student Network
-                        </Badge>
-                        <h1 style={{
-                            fontSize: 'clamp(2.5rem, 8vw, 4.5rem)',
-                            lineHeight: '1.1',
-                            marginBottom: '1.5rem',
-                            maxWidth: '900px',
-                            marginInline: 'auto'
-                        }}>
-                            Where Kerala's <span className="gradient-text">Brightest Minds</span> Collaborate & Create
-                        </h1>
-                        <p style={{
-                            fontSize: '1.25rem',
-                            color: 'var(--text-muted)',
-                            marginBottom: '2.5rem',
-                            maxWidth: '600px',
-                            marginInline: 'auto'
-                        }}>
-                            The all-in-one platform for Kerala's college students to promote events, trade projects, and find mentors.
-                        </p>
-                        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                            <Link to="/signup">
-                                <Button size="lg">Join as Student</Button>
-                            </Link>
-                            <Link to="/events/promote">
-                                <Button variant="outline" size="lg">Promote Event</Button>
-                            </Link>
-                            <Link to="/marketplace/sell">
-                                <Button variant="secondary" size="lg">Sell Project</Button>
-                            </Link>
+            <main className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-32">
+                <section className="mb-32">
+                    <div className="glass-panel rounded-[4rem] p-12 md:p-24 relative overflow-hidden group border-primary/20">
+                        <div className="relative z-10 flex flex-col items-center text-center">
+                            <span className="text-secondary font-black tracking-[0.4em] text-[10px] uppercase mb-8 opacity-80">Kerala's Elite Student Network</span>
+                            <h1 className="text-6xl md:text-8xl font-headline font-black text-white mb-10 leading-[0.9] tracking-tighter">
+                                Architect Your <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Digital Legacy</span>
+                            </h1>
+                            <p className="text-on-surface-variant text-xl max-w-2xl mb-14 leading-relaxed font-medium opacity-70">
+                                The premium ecosystem for modern builders. Connect, trade artifacts, and monetize your innovation in a space designed for technical excellence.
+                            </p>
+                            <div className="flex flex-wrap gap-6 justify-center">
+                                <Link to="/discover" className="px-12 py-5 bg-primary text-[#070d1f] rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/30">
+                                    Explore Discover
+                                </Link>
+                                <Link to="/marketplace" className="px-12 py-5 glass-panel border border-white/10 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white/5 active:scale-95 transition-all">
+                                    Enter Marketplace
+                                </Link>
+                            </div>
                         </div>
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* Stats/Features Preview */}
-            <section style={{ padding: '4rem 0' }}>
-                <div className="container">
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                        gap: '2rem'
-                    }}>
-                        {[
-                            { icon: <Megaphone color="var(--primary)" />, title: "Event Promotions", desc: "Reach 50,000+ students across 150+ Kerala colleges instantly." },
-                            { icon: <ShoppingBag color="var(--secondary)" />, title: "Project Marketplace", desc: "Buy or sell high-quality academic projects with secure transfers." },
-                            { icon: <Users color="var(--accent)" />, title: "Peer Collaboration", desc: "Find partners for your next big hackathon or startup idea." }
-                        ].map((feature, idx) => (
-                            <Card key={idx} padding="2rem">
-                                <div style={{ marginBottom: '1rem' }}>{feature.icon}</div>
-                                <h3 style={{ marginBottom: '0.75rem' }}>{feature.title}</h3>
-                                <p style={{ color: 'var(--text-muted)' }}>{feature.desc}</p>
-                            </Card>
-                        ))}
+                        {/* Abstract Decor */}
+                        <div className="absolute right-[-5%] bottom-[-10%] w-1/2 h-full opacity-10 pointer-events-none group-hover:scale-105 transition-transform duration-1000 grayscale">
+                            <img src="https://images.unsplash.com/photo-1635776062127-d379bfcba9f8?q=80&w=2064&auto=format&fit=crop" alt="" className="w-full h-full object-cover rounded-[4rem]" />
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* Featured Events Carousel (Static Grid for Prototype) */}
-            <section style={{ padding: '5rem 0', background: 'var(--bg-surface)' }}>
-                <div className="container">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '3rem' }}>
+                {/* Features Grid */}
+                <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
+                    {[
+                        { icon: 'target', title: 'Event Hub', desc: 'Promote high-impact tech fests and workshops across institutions instantly.', color: 'text-primary', bg: 'bg-primary/10' },
+                        { icon: 'token', title: 'Artifacts', desc: 'Securely trade project repositories and specialized digital assets.', color: 'text-secondary', bg: 'bg-secondary/10' },
+                        { icon: 'hub', title: 'Neural Network', desc: 'Synchronize with specialized squad members for elite ventures.', color: 'text-tertiary', bg: 'bg-tertiary/10' }
+                    ].map((feature, idx) => (
+                        <div key={idx} className="glass-panel rounded-[2.5rem] p-10 hover:translate-y-[-8px] transition-all duration-500 group">
+                            <div className={`w-16 h-16 rounded-2xl ${feature.bg} flex items-center justify-center mb-10 group-hover:scale-110 transition-transform`}>
+                                <span className={`material-symbols-outlined ${feature.color} text-3xl`}>{feature.icon}</span>
+                            </div>
+                            <h3 className="text-2xl font-black font-headline mb-4 tracking-tight">{feature.title}</h3>
+                            <p className="text-on-surface-variant font-medium leading-relaxed opacity-60">
+                                {feature.desc}
+                            </p>
+                        </div>
+                    ))}
+                </section>
+
+                {/* Live Ecosystem */}
+                <section className="space-y-12">
+                    <div className="flex justify-between items-end px-4">
                         <div>
-                            <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Trending Events</h2>
-                            <p style={{ color: 'var(--text-muted)' }}>Don't miss out on what's happening in Kerala colleges.</p>
+                            <span className="text-primary font-black text-[10px] tracking-[0.3em] uppercase mb-3 block opacity-80">Live Ecosystem</span>
+                            <h2 className="text-4xl font-headline font-black text-white tracking-tighter">Trending Artifacts</h2>
                         </div>
-                        <Link to="/events">
-                            <Button variant="ghost">View All Events <ArrowRight size={16} /></Button>
-                        </Link>
+                        <Link to="/discover" className="text-on-surface-variant hover:text-primary text-[10px] font-black uppercase tracking-widest transition-colors opacity-60 hover:opacity-100">Explorer Registry</Link>
                     </div>
 
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                        gap: '2rem'
-                    }}>
-                        {events.map((event) => (
-                            <Card key={event.id} padding="0">
-                                <div style={{ height: '200px', overflow: 'hidden', position: 'relative' }}>
-                                    <img src={event.image} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                    <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
-                                        <Badge variant={event.tier.toLowerCase()}>{event.tier}</Badge>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {projects.slice(0, 4).map((project, idx) => (
+                            <div key={idx} className="glass-panel rounded-[2rem] overflow-hidden group hover:border-primary/40 transition-all">
+                                <div className="aspect-[4/3] overflow-hidden relative">
+                                    <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60" />
+                                    <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-[#070d1f]/60 backdrop-blur-md text-[8px] font-black text-primary border border-primary/20 tracking-widest uppercase">
+                                        Verified
                                     </div>
                                 </div>
-                                <div style={{ padding: '1.5rem' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                                        <span style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: '600' }}>{event.category}</span>
-                                        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{event.date}</span>
-                                    </div>
-                                    <h3 style={{ marginBottom: '0.5rem', fontSize: '1.25rem' }}>{event.title}</h3>
-                                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '1.5rem' }}>{event.college}</p>
-                                    <Link to={`/events/${event.id}`}>
-                                        <Button variant="outline" style={{ width: '100%' }}>Interested</Button>
-                                    </Link>
-                                </div>
-                            </Card>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Featured Projects */}
-            <section style={{ padding: '5rem 0' }}>
-                <div className="container">
-                    <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                        <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Featured Marketplace Projects</h2>
-                        <p style={{ color: 'var(--text-muted)', maxWidth: '600px', marginInline: 'auto' }}>
-                            Hand-picked premium projects from across Kerala.
-                        </p>
-                    </div>
-
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                        gap: '2rem'
-                    }}>
-                        {projects.map((project) => (
-                            <Card key={project.id} padding="1rem">
-                                <div style={{ height: '180px', borderRadius: 'var(--radius-md)', overflow: 'hidden', marginBottom: '1.25rem' }}>
-                                    <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                </div>
-                                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
-                                    {project.tags.map(tag => <Badge key={tag} size="sm">{tag}</Badge>)}
-                                </div>
-                                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>{project.title}</h3>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
-                                    <span style={{ fontWeight: '700', fontSize: '1.2rem', color: 'var(--primary)' }}>{project.price}</span>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                                        <Trophy size={14} color="var(--accent)" />
-                                        <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>{project.rating}</span>
-                                    </div>
-                                </div>
-                                <Link to={`/marketplace/${project.id}`} style={{ marginTop: '1.5rem', display: 'block' }}>
-                                    <Button variant="primary" style={{ width: '100%' }}>View Details</Button>
-                                </Link>
-                            </Card>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* College Leaderboard Preview */}
-            <section style={{ padding: '5rem 0', background: 'var(--bg-main)' }}>
-                <div className="container">
-                    <Card padding="3rem" style={{ border: '2px solid var(--primary-glow)' }}>
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                            gap: '4rem',
-                            alignItems: 'center'
-                        }}>
-                            <div>
-                                <Badge variant="warning" style={{ marginBottom: '1rem' }}>College Ranking</Badge>
-                                <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>Kerala Campus Leaderboard</h2>
-                                <p style={{ color: 'var(--text-muted)', marginBottom: '2rem', fontSize: '1.1rem' }}>
-                                    See how your college ranks based on event participation, project innovation, and collaboration points.
-                                </p>
-                                <Link to="/leaderboard">
-                                    <Button variant="secondary">View Full Rankings</Button>
-                                </Link>
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                {leaderboard.slice(0, 3).map((item) => (
-                                    <div key={item.rank} style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '1.5rem',
-                                        padding: '1rem',
-                                        background: 'var(--bg-subtle)',
-                                        borderRadius: 'var(--radius-md)',
-                                        border: '1px solid var(--border)'
-                                    }}>
-                                        <span style={{ fontSize: '1.5rem', fontWeight: '900', color: 'var(--primary)', minWidth: '30px' }}>#{item.rank}</span>
-                                        <div style={{ flex: 1 }}>
-                                            <h4 style={{ fontSize: '1rem' }}>{item.name}</h4>
-                                            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{item.district}</p>
+                                <div className="p-6">
+                                    <h4 className="font-black text-lg mb-1 group-hover:text-primary transition-colors font-headline tracking-tight leading-tight">{project.title}</h4>
+                                    <div className="flex justify-between items-center mt-6">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center text-[10px] font-black text-primary">🜚</div>
+                                            <span className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-60">Proof of Node</span>
                                         </div>
-                                        <span style={{ fontWeight: '700' }}>{item.points} pts</span>
+                                        <span className="font-black text-white text-lg">{project.price}</span>
                                     </div>
-                                ))}
+                                </div>
                             </div>
-                        </div>
-                    </Card>
-                </div>
-            </section>
-
-            {/* Final CTA */}
-            <section style={{ padding: '8rem 0', textAlign: 'center' }}>
-                <div className="container">
-                    <div style={{
-                        background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
-                        padding: '4rem 2rem',
-                        borderRadius: 'var(--radius-xl)',
-                        color: 'white'
-                    }}>
-                        <h2 style={{ fontSize: '3rem', marginBottom: '1.5rem' }}>Ready to elevate your campus life?</h2>
-                        <p style={{ fontSize: '1.25rem', marginBottom: '2.5rem', opacity: 0.9 }}>
-                            Join thousands of students across Kerala today.
-                        </p>
-                        <Link to="/signup">
-                            <Button variant="glass" size="lg" style={{ color: 'white', borderColor: 'white' }}>Create Free Account</Button>
-                        </Link>
+                        ))}
                     </div>
-                </div>
-            </section>
+                </section>
+            </main>
         </div>
     );
 };

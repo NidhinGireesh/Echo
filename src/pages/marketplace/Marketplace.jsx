@@ -1,145 +1,146 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Search, Filter, ShoppingBag, Star, ArrowRight, Tag } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import Card from '../../components/ui/Card';
-import Badge from '../../components/ui/Badge';
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
+import React, { useEffect, useState } from 'react';
 import { projects } from '../../data/mockData';
+import { Link } from 'react-router-dom';
 
 const Marketplace = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [activeCategory, setActiveCategory] = useState('All');
+    const [activeTab, setActiveTab] = useState('All Assets');
 
-    const categories = ['All', 'Machine Learning', 'UI Kit', 'ML Dataset', 'API Wrapper', 'IoT', 'Blockchain'];
+    useEffect(() => {
+        const glow = document.getElementById('cursor-glow');
+        if (!glow) return;
+        
+        const handleMouseMove = (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        };
 
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
+    // Filter projects based on the active tab
     const filteredProjects = projects.filter(project => {
-        const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                            project.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-        const matchesCategory = activeCategory === 'All' || project.category === activeCategory;
-        return matchesSearch && matchesCategory;
+        if (activeTab === 'All Assets') return true;
+        if (activeTab === 'Design' && project.category === 'UI Kit') return true;
+        if (activeTab === 'Code' && project.category === 'API Wrapper') return true;
+        if (activeTab === 'Data' && project.category === 'ML Dataset') return true;
+        if (activeTab === 'Models' && project.category === 'Machine Learning') return true;
+        return false;
     });
 
     return (
-        <div className="container" style={{ padding: '4rem 1.5rem' }}>
-            {/* Header */}
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Asset <span className="gradient-text">Marketplace</span></h1>
-                <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', marginInline: 'auto' }}>
-                    Stop rebuilding from scratch. Buy verified UI kits, custom ML datasets, and specialized code modules.
-                </p>
-            </div>
+        <div className="pt-6 pb-20 px-6 relative z-10 w-full max-w-7xl mx-auto selection:bg-primary/20">
+            {/* Interactive Cursor Glow */}
+            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
 
-            {/* Search and Filters */}
-            <div style={{
-                display: 'flex',
-                gap: '1rem',
-                marginBottom: '3rem',
-                background: 'var(--bg-surface)',
-                padding: '1.5rem',
-                borderRadius: 'var(--radius-lg)',
-                border: '1px solid var(--border)',
-                flexWrap: 'wrap'
-            }}>
-                <div style={{ flex: 1, minWidth: '300px', position: 'relative' }}>
-                    <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                    <input
-                        type="text"
-                        placeholder="Search assets (e.g. Figma Kit, Traffic Dataset)..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        style={{
-                            width: '100%',
-                            padding: '0.75rem 1rem 0.75rem 2.8rem',
-                            borderRadius: 'var(--radius-md)',
-                            border: '1px solid var(--border)',
-                            background: 'var(--bg-main)',
-                            color: 'var(--text-main)',
-                            outline: 'none'
-                        }}
-                    />
+            {/* Hero Section */}
+            <header className="mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="md:col-span-2 p-10 glass-panel rounded-[2rem] flex flex-col justify-end relative overflow-hidden h-[400px] group border-primary/20">
+                        <div className="absolute inset-0 z-0 opacity-40 group-hover:scale-105 transition-transform duration-1000">
+                            <img className="w-full h-full object-cover mix-blend-screen" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop"/>
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#070d1f] via-transparent to-transparent"></div>
+                        </div>
+                        <div className="relative z-10">
+                            <span className="text-secondary font-black uppercase tracking-[0.2em] text-[10px] mb-4 block">Student Ventures</span>
+                            <h1 className="text-5xl font-black font-headline text-white tracking-tighter mb-4 leading-none">Kerala <br/>Tech <span className="text-primary">Market</span></h1>
+                            <p className="text-on-surface-variant max-w-xl text-lg mb-8 leading-relaxed opacity-80">Discover a curated universe of high-fidelity digital assets built by the brightest minds in Kerala's engineering colleges.</p>
+                            <div className="flex gap-4">
+                                <button className="px-8 py-3 bg-primary text-[#070d1f] font-black rounded-xl hover:scale-105 transition-transform shadow-lg shadow-primary/20 text-xs uppercase tracking-widest">Connect All</button>
+                                <button className="px-8 py-3 glass-panel border border-white/10 rounded-xl font-black hover:bg-white/5 transition-all text-xs uppercase tracking-widest">Submit Node</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="glass-panel rounded-[2rem] p-8 flex flex-col items-center justify-center text-center group">
+                        <div className="w-20 h-20 bg-secondary/10 rounded-full flex items-center justify-center mb-6 border border-secondary/20 group-hover:scale-110 transition-transform">
+                            <span className="material-symbols-outlined text-secondary text-4xl" style={{fontVariationSettings: "'FILL' 1"}}>stars</span>
+                        </div>
+                        <h2 className="text-2xl font-black font-headline mb-1 text-white tracking-tighter">Top Innovator</h2>
+                        <p className="text-on-surface-variant text-[10px] font-black uppercase tracking-widest mb-6 opacity-60">CET_Labs_Official</p>
+                        <div className="flex -space-x-3 mb-8">
+                            {[1, 2, 3].map(i => (
+                                <img key={i} className="w-10 h-10 rounded-full border-2 border-[#070d1f]" src={`https://i.pravatar.cc/100?u=creator${i}`} />
+                            ))}
+                            <div className="w-10 h-10 rounded-full bg-white/5 border-2 border-[#070d1f] flex items-center justify-center text-[10px] font-black text-white">+12</div>
+                        </div>
+                        <button className="w-full py-3 rounded-xl border border-white/5 text-white text-[10px] font-black uppercase tracking-widest hover:bg-white/5 transition-all">Synchronize</button>
+                    </div>
                 </div>
-                <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.25rem' }} className="no-scrollbar">
-                    {categories.map(cat => (
-                        <button
-                            key={cat}
-                            onClick={() => setActiveCategory(cat)}
-                            style={{
-                                padding: '0.6rem 1.25rem',
-                                borderRadius: 'var(--radius-md)',
-                                border: '1px solid',
-                                borderColor: activeCategory === cat ? 'var(--primary)' : 'var(--border)',
-                                background: activeCategory === cat ? 'var(--primary)' : 'var(--bg-main)',
-                                color: activeCategory === cat ? 'white' : 'var(--text-main)',
-                                whiteSpace: 'nowrap',
-                                cursor: 'pointer',
-                                fontSize: '0.85rem',
-                                fontWeight: '600',
-                                transition: 'var(--transition)'
-                            }}
+            </header>
+
+            {/* Category Filter Bar */}
+            <section className="mb-10 flex flex-wrap items-center justify-between gap-6">
+                <div className="flex items-center gap-3 scroll-x-auto no-scrollbar pb-2 px-4 -mx-4 md:px-0 md:mx-0">
+                    {['All Assets', 'Design', 'Code', 'Data', 'Models'].map(tab => (
+                        <button 
+                            key={tab}
+                            onClick={() => setActiveTab(tab)}
+                            className={`px-6 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all ${
+                                activeTab === tab 
+                                ? 'bg-primary text-[#070d1f] shadow-lg shadow-primary/20' 
+                                : 'glass-panel border border-white/5 text-on-surface-variant hover:text-white hover:bg-white/5'
+                            }`}
                         >
-                            {cat}
+                            {tab}
                         </button>
                     ))}
                 </div>
-            </div>
+                <div className="flex items-center gap-4">
+                    <button className="flex items-center gap-2 px-5 py-2.5 glass-panel rounded-xl text-[10px] font-black uppercase tracking-widest border border-white/5 hover:bg-white/5 transition-all">
+                        <span className="material-symbols-outlined text-lg">filter_list</span>
+                        Sort
+                    </button>
+                </div>
+            </section>
 
-            {/* Grid */}
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-                gap: '2.5rem'
-            }}>
-                {filteredProjects.map((project) => (
-                    <motion.div
-                        key={project.id}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <Card padding="0" hover className="fade-in">
-                            <div style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
-                                <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                <div style={{ position: 'absolute', top: '1rem', left: '1rem', display: 'flex', gap: '0.5rem' }}>
-                                    {project.featured && <Badge variant="gold">Editor's Choice</Badge>}
-                                    <Badge variant="secondary">{project.type}</Badge>
-                                </div>
-                                <div style={{ position: 'absolute', bottom: '1rem', right: '1rem' }}>
-                                    <div style={{ background: 'rgba(0,0,0,0.6)', color: 'white', padding: '0.4rem 0.8rem', borderRadius: 'var(--radius-sm)', backdropFilter: 'blur(4px)', fontWeight: '700' }}>
-                                        {project.price}
-                                    </div>
-                                </div>
+            {/* Asset Grid */}
+            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {filteredProjects.map((project, idx) => (
+                    <Link to={`/marketplace/${project.id}`} key={idx} className="group relative flex flex-col glass-panel rounded-[2rem] overflow-hidden hover:border-primary/40 transition-all duration-500 hover:-translate-y-2">
+                        <div className="aspect-[4/3] overflow-hidden relative">
+                            <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80" src={project.image}/>
+                            <div className="absolute top-4 left-4">
+                                <span className="px-3 py-1 rounded-full bg-[#070d1f]/60 backdrop-blur-md text-white text-[8px] font-black uppercase tracking-widest border border-white/10">
+                                    {project.category}
+                                </span>
                             </div>
-                            <div style={{ padding: '1.5rem' }}>
-                                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
-                                    {project.tags.map(tag => <Badge key={tag} size="sm">{tag}</Badge>)}
-                                </div>
-                                <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem' }}>{project.title}</h3>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                        <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.7rem' }}>
-                                            {project.seller[0]}
-                                        </div>
-                                        <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{project.seller}</span>
-                                    </div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                                        <Star size={14} fill="var(--accent)" color="var(--accent)" />
-                                        <span style={{ fontSize: '0.85rem', fontWeight: '700' }}>{project.rating}</span>
-                                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>({project.reviews})</span>
-                                    </div>
-                                </div>
-                                <Link to={`/marketplace/${project.id}`}>
-                                    <Button variant="primary" style={{ width: '100%' }}>View Asset Details</Button>
-                                </Link>
+                        </div>
+                        <div className="p-6 flex flex-col flex-1">
+                            <div className="flex justify-between items-start mb-4 gap-2">
+                                <h3 className="font-black text-lg text-white font-headline tracking-tighter group-hover:text-primary transition-colors leading-tight">{project.title}</h3>
+                                <span className="font-black text-primary whitespace-nowrap text-lg leading-none">{project.price}</span>
                             </div>
-                        </Card>
-                    </motion.div>
+                            <div className="flex flex-wrap gap-2 mb-6">
+                                {project.tags.slice(0, 2).map(tag => (
+                                    <span key={tag} className="text-[8px] font-black uppercase tracking-widest bg-white/5 border border-white/10 rounded-md px-2 py-1 text-on-surface-variant opacity-60">{tag}</span>
+                                ))}
+                            </div>
+                            <div className="mt-auto flex items-center justify-between pt-5 border-t border-white/5">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center">
+                                        <span className="material-symbols-outlined text-[14px] text-primary" style={{fontVariationSettings: "'FILL' 1"}}>verified</span>
+                                    </div>
+                                    <span className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-60">{project.seller}</span>
+                                </div>
+                                <button className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-[#070d1f] transition-all">
+                                    <span className="material-symbols-outlined text-xl">shopping_cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </Link>
                 ))}
+            </section>
+
+            {/* Pagination */}
+            <div className="mt-20 flex justify-center pb-20">
+                <button className="px-12 py-4 glass-panel border border-white/10 rounded-full font-black text-[10px] uppercase tracking-[0.2em] text-white hover:bg-white/5 transition-all flex items-center gap-4">
+                    Load More Nodes
+                    <span className="material-symbols-outlined animate-bounce">arrow_downward</span>
+                </button>
             </div>
         </div>
     );
 };
-
 
 export default Marketplace;

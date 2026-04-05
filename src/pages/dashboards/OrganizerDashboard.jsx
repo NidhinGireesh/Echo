@@ -1,110 +1,125 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Upload, PieChart, TrendingUp, Users, ExternalLink, Plus, Award } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import Badge from '../../components/ui/Badge';
-import Button from '../../components/ui/Button';
+import React, { useEffect } from 'react';
 
 const OrganizerDashboard = () => {
+    useEffect(() => {
+        const glow = document.getElementById('cursor-glow');
+        if (!glow) return;
+        
+        const handleMouseMove = (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
     return (
-        <div className="container" style={{ padding: '2rem 1.5rem' }}>
-            <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+        <div className="flex-1 p-6 lg:p-10 max-w-7xl mx-auto w-full relative selection:bg-secondary/20">
+            {/* Interactive Cursor Glow */}
+            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-secondary/10 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
+
+            <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
                 <div>
-                    <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Ambassador Dashboard</h1>
-                    <p style={{ color: 'var(--text-muted)' }}>Lead your campus community, onboard events, and earn perks.</p>
+                    <h1 className="text-4xl font-black font-headline tracking-tight text-white mb-2">Ambassador Hub</h1>
+                    <p className="text-on-surface-variant font-medium opacity-60">Lead your campus community and onboard elite events.</p>
                 </div>
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                    <Button variant="outline">
-                        <Users size={18} style={{ marginRight: '0.5rem' }} /> Manage Clubs
-                    </Button>
-                    <Button>
-                        <Plus size={18} style={{ marginRight: '0.5rem' }} /> Onboard New Event
-                    </Button>
+                <div className="flex gap-3">
+                    <button className="glass-panel px-6 py-3 rounded-xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest hover:bg-white/5 transition-all">
+                        <span className="material-symbols-outlined text-lg">groups</span>
+                        Clubs
+                    </button>
+                    <button className="bg-primary text-[#070d1f] px-6 py-3 rounded-xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                        <span className="material-symbols-outlined text-lg font-black">plus_one</span>
+                        New Event
+                    </button>
                 </div>
             </header>
 
-            {/* Ambassador Stats */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2rem', marginBottom: '3rem' }}>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                 {[
-                    { icon: <TrendingUp color="var(--primary)" />, label: 'Marketplace Influence', value: '₹42,500', sub: 'Commission Earned' },
-                    { icon: <Users color="var(--secondary)" />, label: 'Students Onboarded', value: '1,240', sub: '+15% this month' },
-                    { icon: <ExternalLink color="var(--accent)" />, label: 'Event Outreach', value: '12 Active', sub: 'In 3 colleges' },
-                    { icon: <Award size={24} color="#a855f7" />, label: 'Current Tier', value: 'Silver', sub: '250pts to Gold' }
+                    { icon: 'trending_up', label: 'Influence', value: '42.5k', color: 'text-primary', bg: 'bg-primary/10' },
+                    { icon: 'person_add', label: 'Onboarded', value: '1,240', color: 'text-secondary', bg: 'bg-secondary/10' },
+                    { icon: 'share', label: 'Outreach', value: '12 Active', color: 'text-tertiary', bg: 'bg-tertiary/10' },
+                    { icon: 'workspace_premium', label: 'Tier', value: 'Silver', color: 'text-white', bg: 'bg-white/10' }
                 ].map((stat, i) => (
-                    <Card key={i} padding="1.5rem" className="glass">
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                            <div style={{ padding: '0.75rem', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-md)' }}>{stat.icon}</div>
+                    <div key={i} className="glass-panel p-6 group transition-all hover:translate-y-[-4px]">
+                        <div className={`w-12 h-12 rounded-2xl ${stat.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                            <span className={`material-symbols-outlined ${stat.color} text-2xl`}>{stat.icon}</span>
                         </div>
-                        <div style={{ fontSize: '1.75rem', fontWeight: '800' }}>{stat.value}</div>
-                        <div style={{ fontWeight: '700', fontSize: '0.9rem', marginBottom: '0.25rem' }}>{stat.label}</div>
-                        <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>{stat.sub}</div>
-                    </Card>
+                        <div className="text-3xl font-black font-headline text-white mb-1">{stat.value}</div>
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-60">{stat.label}</div>
+                    </div>
                 ))}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem' }}>
-                {/* Active Promotions */}
-                <section>
-                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Onboarded Events</h2>
-                    <Card padding="0">
-                        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Event Table */}
+                <section className="lg:col-span-2 glass-panel overflow-hidden">
+                    <div className="p-6 border-b border-white/5 flex justify-between items-center">
+                        <h2 className="font-headline font-black text-xl text-white">Event Registry</h2>
+                        <button className="text-[10px] font-black text-primary uppercase tracking-widest hover:underline">Full Analytics</button>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left">
                             <thead>
-                                <tr style={{ borderBottom: '1px solid var(--border)' }}>
-                                    <th style={{ padding: '1.25rem', fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>EVENT</th>
-                                    <th style={{ padding: '1.25rem', fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>TIER</th>
-                                    <th style={{ padding: '1.25rem', fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>STATUS</th>
-                                    <th style={{ padding: '1.25rem', fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>REACH</th>
+                                <tr className="border-b border-white/5 bg-white/2">
+                                    <th className="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Event Node</th>
+                                    <th className="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Priority</th>
+                                    <th className="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Status</th>
+                                    <th className="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Reach</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {[
-                                    { title: 'Cyber Security Hackathon', tier: 'Gold', reach: '8,400', status: 'Live' },
-                                    { title: 'Entrepreneurship Summit', tier: 'Silver', reach: '5,200', status: 'Pending' },
-                                    { title: 'Cultural Fest Promo', tier: 'Free', reach: '1,250', status: 'Completed' }
-                                ].map((promo, i) => (
-                                    <tr key={i} style={{ borderBottom: i < 2 ? '1px solid var(--border)' : 'none' }}>
-                                        <td style={{ padding: '1.25rem', fontWeight: '600' }}>{promo.title}</td>
-                                        <td style={{ padding: '1.25rem' }}><Badge variant={promo.tier.toLowerCase()}>{promo.tier}</Badge></td>
-                                        <td style={{ padding: '1.25rem' }}>
-                                            <span style={{
-                                                fontSize: '0.8rem',
-                                                color: promo.status === 'Live' ? 'var(--secondary)' :
-                                                    promo.status === 'Pending' ? 'var(--accent)' : 'var(--text-muted)'
-                                            }}>
-                                                • {promo.status}
-                                            </span>
+                                    { title: 'Tathva Hackathon', tier: 'Gold', reach: '8,400', status: 'Live', color: 'text-secondary' },
+                                    { title: 'Kerala Startup Summit', tier: 'Silver', reach: '5,200', status: 'Pending', color: 'text-tertiary' },
+                                    { title: 'Hestia Promo Campaign', tier: 'Free', reach: '1,250', status: 'Done', color: 'text-on-surface-variant' }
+                                ].map((row, i) => (
+                                    <tr key={i} className="border-b border-white/5 hover:bg-white/2 transition-colors cursor-pointer group">
+                                        <td className="px-6 py-5">
+                                            <div className="text-sm font-black text-white group-hover:text-primary transition-colors">{row.title}</div>
                                         </td>
-                                        <td style={{ padding: '1.25rem' }}>{promo.reach}</td>
+                                        <td className="px-6 py-5">
+                                            <span className="text-[8px] font-black px-2 py-1 bg-white/5 border border-white/10 rounded-md uppercase tracking-widest">{row.tier}</span>
+                                        </td>
+                                        <td className="px-6 py-5">
+                                            <div className="flex items-center gap-2">
+                                                <span className={`w-1.5 h-1.5 rounded-full bg-current ${row.color}`}></span>
+                                                <span className={`text-[10px] font-black uppercase tracking-tighter ${row.color}`}>{row.status}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-5 text-sm font-bold text-on-surface-variant opacity-60">{row.reach}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                    </Card>
+                    </div>
                 </section>
 
-                {/* Tech Clubs */}
-                <aside>
-                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Managed Clubs</h2>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {/* Managed Clubs */}
+                <aside className="glass-panel p-6">
+                    <h2 className="font-headline font-black text-xl text-white mb-8">Managed Cells</h2>
+                    <div className="space-y-4">
                         {[
-                            { name: 'IEEE SB MEC', members: '250+', logo: 'I' },
-                            { name: 'TinkerHub MEC', members: '400+', logo: 'T' },
-                            { name: 'FOSS Cell', members: '180+', logo: 'F' }
+                            { name: 'IEEE SB MEC', members: '250+', initial: 'I', color: 'bg-primary' },
+                            { name: 'TinkerHub MEC', members: '400+', initial: 'T', color: 'bg-secondary' },
+                            { name: 'FOSS Cell', members: '180+', initial: 'F', color: 'bg-tertiary' }
                         ].map((club, i) => (
-                            <Card key={i} padding="1rem">
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <div style={{ width: '40px', height: '40px', borderRadius: 'var(--radius-sm)', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900' }}>
-                                        {club.logo}
-                                    </div>
-                                    <div style={{ flex: 1 }}>
-                                        <h4 style={{ fontSize: '0.9rem', marginBottom: '0.1rem' }}>{club.name}</h4>
-                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{club.members} Members</p>
-                                    </div>
-                                    <Button variant="ghost" size="sm">Manage</Button>
+                            <div key={i} className="p-4 rounded-2xl bg-white/5 border border-white/5 flex items-center gap-4 hover:border-primary/20 transition-all cursor-pointer group">
+                                <div className={`w-10 h-10 rounded-xl ${club.color} text-[#070d1f] flex items-center justify-center font-black group-hover:scale-110 transition-transform`}>
+                                    {club.initial}
                                 </div>
-                            </Card>
+                                <div className="flex-1">
+                                    <div className="text-xs font-black text-white mb-0.5">{club.name}</div>
+                                    <div className="text-[9px] font-bold text-on-surface-variant uppercase tracking-widest">{club.members} Nodes</div>
+                                </div>
+                                <span className="material-symbols-outlined text-on-surface-variant opacity-20 group-hover:opacity-100 transition-opacity">arrow_forward_ios</span>
+                            </div>
                         ))}
                     </div>
+                    <button className="w-full mt-8 py-3 rounded-xl border border-white/5 bg-white/5 text-[10px] font-black uppercase tracking-widest text-on-surface-variant hover:text-white transition-all">Onboard New Cell</button>
                 </aside>
             </div>
         </div>
