@@ -7,7 +7,7 @@ const StudentDashboard = () => {
     useEffect(() => {
         const glow = document.getElementById('cursor-glow');
         if (!glow) return;
-        
+
         const handleMouseMove = (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
@@ -20,7 +20,7 @@ const StudentDashboard = () => {
     return (
         <div className="flex-1 p-6 lg:p-10 max-w-7xl mx-auto w-full relative">
             {/* Interactive Cursor Glow */}
-            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
+            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/20 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
                 {/* Welcome Tile (Wide) */}
@@ -29,7 +29,7 @@ const StudentDashboard = () => {
                         <span className="text-secondary font-headline font-bold tracking-widest text-xs uppercase mb-2">Academic Overview</span>
                         <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-on-surface mb-4 leading-tight">
                             Welcome back,<br />
-                            <span className="text-primary-fixed">{user.name}</span>
+                            <span className="text-primary">{user.name}</span>
                         </h2>
                         <p className="text-on-surface-variant max-w-md mb-8 text-lg">
                             You have 3 collaboration requests and your latest Project "K-Rail Tracker" is trending in the marketplace.
@@ -37,7 +37,7 @@ const StudentDashboard = () => {
                         <div className="flex flex-wrap gap-4">
                             <div className="bg-surface-container-high/30 backdrop-blur-md px-5 py-3 rounded-2xl flex items-center gap-3 border border-white/5 font-headline">
                                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                                    <span className="material-symbols-outlined text-primary" style={{fontVariationSettings: "'FILL' 1"}}>stars</span>
+                                    <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>stars</span>
                                 </div>
                                 <div>
                                     <p className="text-xs text-on-surface-variant font-medium uppercase tracking-tighter">Global Rank</p>
@@ -46,7 +46,7 @@ const StudentDashboard = () => {
                             </div>
                             <div className="bg-surface-container-high/30 backdrop-blur-md px-5 py-3 rounded-2xl flex items-center gap-3 border border-white/5 font-headline">
                                 <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center">
-                                    <span className="material-symbols-outlined text-secondary" style={{fontVariationSettings: "'FILL' 1"}}>workspace_premium</span>
+                                    <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>workspace_premium</span>
                                 </div>
                                 <div>
                                     <p className="text-xs text-on-surface-variant font-medium uppercase tracking-tighter">Credits</p>
@@ -77,13 +77,13 @@ const StudentDashboard = () => {
                         <p className="text-sm text-on-surface-variant mb-6 leading-relaxed">Premium modular design system for building dynamic tourism apps.</p>
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center -space-x-3">
-                                <img alt="Contributor" className="w-8 h-8 rounded-full border-2 border-surface" src="https://i.pravatar.cc/100?u=1" />
-                                <img alt="Contributor" className="w-8 h-8 rounded-full border-2 border-surface" src="https://i.pravatar.cc/100?u=2" />
+                                <img alt="Contributor" className="w-8 h-8 rounded-full border-2 border-surface" src={users[0].avatar} />
+                                <img alt="Contributor" className="w-8 h-8 rounded-full border-2 border-surface" src={users[1].avatar} />
                                 <div className="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-surface flex items-center justify-center text-[10px] font-bold">+12</div>
                             </div>
                             <span className="font-headline font-black text-xl text-primary">450 🜚</span>
                         </div>
-                        <button className="w-full py-3 bg-white/5 border border-white/5 rounded-xl font-bold hover:bg-white/10 transition-colors text-sm">
+                        <button className="glass-button !w-full !py-3 !text-xs">
                             Purchase License
                         </button>
                     </div>
@@ -127,7 +127,7 @@ const StudentDashboard = () => {
                                     <span className={skill.text}>{skill.level}</span>
                                 </div>
                                 <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div className={`h-full ${skill.color} rounded-full shadow-[0_0_12px_rgba(133,173,255,0.3)]`} style={{ width: `${skill.fill}%` }}></div>
+                                    <div className={`h-full ${skill.color} rounded-full shadow-[0_0_12px_rgba(167,139,250,0.3)]`} style={{ width: `${skill.fill}%` }}></div>
                                 </div>
                             </div>
                         ))}
@@ -146,7 +146,7 @@ const StudentDashboard = () => {
                     <div className="flex items-center justify-between mb-8">
                         <h3 className="font-headline font-extrabold text-2xl">Streaming Activity</h3>
                         <div className="flex gap-2">
-                            <button className="bg-primary text-[#070d1f] px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">Live</button>
+                            <button className="bg-primary text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">Live</button>
                             <button className="bg-white/5 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-colors">Historical</button>
                         </div>
                     </div>

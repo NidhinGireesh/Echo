@@ -55,8 +55,8 @@ const ProfilePage = () => {
                         </div>
                     </div>
                     <div className="flex gap-3">
-                        <button className="bg-white/5 backdrop-blur-md border border-white/10 px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-white/10 transition-all">Edit Identity</button>
-                        <button className="bg-primary text-[#070d1f] px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">Share Proof</button>
+                        <button className="glass-button !px-6 !py-2.5 !text-[10px] !from-white/5 !to-transparent">Edit Identity</button>
+                        <button className="glass-button !px-6 !py-2.5 !text-[10px]">Share Proof</button>
                     </div>
                 </header>
 
@@ -124,7 +124,7 @@ const ProfilePage = () => {
                                 <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest mt-1">Validated cryptographic assets</p>
                             </div>
                             <div className="flex gap-2 p-1 bg-white/5 rounded-xl border border-white/5">
-                                <button className="px-4 py-1.5 rounded-lg bg-primary text-[#070d1f] text-[9px] font-black uppercase">All</button>
+                                <button className="px-4 py-1.5 rounded-lg bg-primary text-white text-[9px] font-black uppercase">All</button>
                                 <button className="px-4 py-1.5 rounded-lg text-[9px] font-black text-on-surface-variant hover:text-white uppercase">Nodes</button>
                                 <button className="px-4 py-1.5 rounded-lg text-[9px] font-black text-on-surface-variant hover:text-white uppercase">Assets</button>
                             </div>

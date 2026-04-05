@@ -5,10 +5,10 @@
 :root {
   --surface: #070d1f;
   --on-surface: #dfe4fe;
-  --primary: #85adff;
+  --primary: #a78bfa;
   --secondary: #c180ff;
   --tertiary: #ff6daf;
-  --primary-fixed: #6e9fff;
+  --primary-fixed: #c4b5fd;
   --on-surface-variant: #a5aac2;
   --surface-container-high: #171f36;
   --surface-container-highest: #1c253e;
@@ -63,6 +63,17 @@
     filter: blur(80px);
   }
 
+  .glass-button {
+    @apply px-12 py-5 bg-gradient-to-br from-primary/20 via-primary/5 to-[#070d1f] backdrop-blur-xl border border-white/10 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_8px_32px_rgba(167,139,250,0.15)] text-center relative overflow-hidden;
+  }
+  .glass-button::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent opacity-0 transition-opacity duration-300;
+  }
+  .glass-button:hover::after {
+    @apply opacity-100;
+  }
+
   .orb {
     @apply absolute rounded-full;
     animation: float 25s infinite alternate ease-in-out;
@@ -92,4 +103,8 @@
 /* Utilities */
 .text-gradient {
   @apply bg-clip-text text-transparent bg-gradient-to-br from-primary to-secondary;
+}
+
+.hover-text-violet {
+  @apply hover:text-primary transition-colors duration-300 ease-in-out;
 }

@@ -68,9 +68,9 @@ const PricingPage = () => {
 
     return (
         <div className="container" style={{ padding: '6rem 1.5rem' }}>
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Unlock Your <span className="gradient-text">Potential</span></h1>
-                <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', marginInline: 'auto' }}>
+            <div className="text-center mb-16 relative z-10">
+                <h1 className="text-5xl md:text-6xl font-black font-headline tracking-tighter text-white mb-4">Unlock Your <span className="text-primary">Potential</span></h1>
+                <p className="text-on-surface-variant font-medium text-lg max-w-xl mx-auto opacity-70">
                     Whether you're promoting a fest, or leading your campus tech community, Echo has the perfect tier for you.
                 </p>
             </div>
@@ -118,7 +118,9 @@ const PricingPage = () => {
                             ))}
                         </div>
 
-                        <Button variant={tier.variant} size="lg" style={{ width: '100%' }}>{tier.buttonText}</Button>
+                        <button className={`glass-button !w-full !py-4 !text-xs ${tier.recommended ? '' : '!from-white/5 !to-transparent'}`}>
+                            {tier.buttonText}
+                        </button>
                     </Card>
                 ))}
             </div>

@@ -6,7 +6,7 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="relative bg-[#070d1f] border-t border-white/5 pt-20 pb-10 overflow-hidden">
+        <footer className="relative bg-[#070d1f]/40 backdrop-blur-3xl border-t border-white/5 pt-20 pb-10 overflow-hidden">
             {/* Background Blob */}
             <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full -mr-64 -mb-64 pointer-events-none"></div>
             

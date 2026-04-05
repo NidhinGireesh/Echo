@@ -81,7 +81,7 @@ const MessagingPage = () => {
                         <div>
                             <h2 className="text-sm font-black font-headline text-white">Star-Ship Protocol</h2>
                             <span className="text-[9px] text-primary font-black uppercase flex items-center gap-1">
-                                <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(133,173,255,1)]"></span> 4 active now
+                                <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(167,139,250,1)]"></span> 4 active now
                             </span>
                         </div>
                     </div>
@@ -143,7 +143,7 @@ const MessagingPage = () => {
                             <button className="text-on-surface-variant hover:text-white transition-colors">
                                 <span className="material-symbols-outlined">sentiment_satisfied</span>
                             </button>
-                            <button className="bg-primary hover:bg-primary-dim text-[#070d1f] w-10 h-10 rounded-full flex items-center justify-center active:scale-90 transition-all shadow-lg shadow-primary/20">
+                            <button className="bg-primary hover:bg-violet-400 text-white w-10 h-10 rounded-full flex items-center justify-center active:scale-90 transition-all shadow-lg shadow-primary/20">
                                 <span className="material-symbols-outlined font-black" style={{fontSize: '20px'}}>send</span>
                             </button>
                         </div>

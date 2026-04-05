@@ -103,7 +103,7 @@ const AuthPage = () => {
                             </div>
                             <button 
                                 onClick={handleLogin}
-                                className="w-full bg-gradient-to-r from-primary to-primary-dim text-[#070d1f] py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-primary/20"
+                                className="glass-button !w-full !py-4"
                             >
                                 Connect Node
                             </button>

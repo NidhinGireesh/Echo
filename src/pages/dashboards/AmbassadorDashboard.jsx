@@ -4,7 +4,7 @@ export default function AmbassadorDashboard() {
     useEffect(() => {
         const glow = document.getElementById('cursor-glow');
         if (!glow) return;
-        
+
         const handleMouseMove = (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
@@ -17,7 +17,7 @@ export default function AmbassadorDashboard() {
     return (
         <div className="flex-1 p-6 lg:p-10 max-w-7xl mx-auto w-full relative selection:bg-primary/20">
             {/* Interactive Cursor Glow */}
-            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
+            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/20 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
 
             <header className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
@@ -25,7 +25,7 @@ export default function AmbassadorDashboard() {
                     <p className="text-on-surface-variant font-medium opacity-60">You are currently operating in the <span className="text-primary">Gold Tier</span>.</p>
                 </div>
                 <div className="bg-primary/10 px-6 py-3 rounded-2xl border border-primary/30 flex items-center gap-3">
-                    <span className="material-symbols-outlined text-primary" style={{fontVariationSettings: "'FILL' 1"}}>workspace_premium</span>
+                    <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>workspace_premium</span>
                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Gold Level Unlocked</span>
                 </div>
             </header>

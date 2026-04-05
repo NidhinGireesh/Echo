@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { projects } from '../../data/mockData';
+import { projects, users } from '../../data/mockData';
 import { Link } from 'react-router-dom';
 
 const Marketplace = () => {
@@ -38,7 +38,7 @@ const Marketplace = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="md:col-span-2 p-10 glass-panel rounded-[2rem] flex flex-col justify-end relative overflow-hidden h-[400px] group border-primary/20">
                         <div className="absolute inset-0 z-0 opacity-40 group-hover:scale-105 transition-transform duration-1000">
-                            <img className="w-full h-full object-cover mix-blend-screen" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop"/>
+                            <img className="w-full h-full object-cover mix-blend-screen" src="https://images.unsplash.com/photo-1596422846543-b5c65171e03a?q=80&w=2070&auto=format&fit=crop"/>
                             <div className="absolute inset-0 bg-gradient-to-t from-[#070d1f] via-transparent to-transparent"></div>
                         </div>
                         <div className="relative z-10">
@@ -46,7 +46,7 @@ const Marketplace = () => {
                             <h1 className="text-5xl font-black font-headline text-white tracking-tighter mb-4 leading-none">Kerala <br/>Tech <span className="text-primary">Market</span></h1>
                             <p className="text-on-surface-variant max-w-xl text-lg mb-8 leading-relaxed opacity-80">Discover a curated universe of high-fidelity digital assets built by the brightest minds in Kerala's engineering colleges.</p>
                             <div className="flex gap-4">
-                                <button className="px-8 py-3 bg-primary text-[#070d1f] font-black rounded-xl hover:scale-105 transition-transform shadow-lg shadow-primary/20 text-xs uppercase tracking-widest">Connect All</button>
+                                <Link to="/marketplace" className="px-8 py-3 bg-primary text-white font-black rounded-xl hover:scale-105 transition-all shadow-lg shadow-primary/20 text-xs uppercase tracking-widest text-center">Connect All</Link>
                                 <button className="px-8 py-3 glass-panel border border-white/10 rounded-xl font-black hover:bg-white/5 transition-all text-xs uppercase tracking-widest">Submit Node</button>
                             </div>
                         </div>
@@ -59,10 +59,10 @@ const Marketplace = () => {
                         <h2 className="text-2xl font-black font-headline mb-1 text-white tracking-tighter">Top Innovator</h2>
                         <p className="text-on-surface-variant text-[10px] font-black uppercase tracking-widest mb-6 opacity-60">CET_Labs_Official</p>
                         <div className="flex -space-x-3 mb-8">
-                            {[1, 2, 3].map(i => (
-                                <img key={i} className="w-10 h-10 rounded-full border-2 border-[#070d1f]" src={`https://i.pravatar.cc/100?u=creator${i}`} />
+                            {users.map(u => (
+                                <img key={u.id} className="w-10 h-10 rounded-full border-2 border-[#070d1f]" src={u.avatar} />
                             ))}
-                            <div className="w-10 h-10 rounded-full bg-white/5 border-2 border-[#070d1f] flex items-center justify-center text-[10px] font-black text-white">+12</div>
+                            <div className="w-10 h-10 rounded-full bg-white/5 border-2 border-[#070d1f] flex items-center justify-center text-[10px] font-black text-white">+8</div>
                         </div>
                         <button className="w-full py-3 rounded-xl border border-white/5 text-white text-[10px] font-black uppercase tracking-widest hover:bg-white/5 transition-all">Synchronize</button>
                     </div>
@@ -78,7 +78,7 @@ const Marketplace = () => {
                             onClick={() => setActiveTab(tab)}
                             className={`px-6 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all ${
                                 activeTab === tab 
-                                ? 'bg-primary text-[#070d1f] shadow-lg shadow-primary/20' 
+                                ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/20' 
                                 : 'glass-panel border border-white/5 text-on-surface-variant hover:text-white hover:bg-white/5'
                             }`}
                         >
@@ -123,7 +123,7 @@ const Marketplace = () => {
                                     </div>
                                     <span className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-60">{project.seller}</span>
                                 </div>
-                                <button className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-[#070d1f] transition-all">
+                                <button className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
                                     <span className="material-symbols-outlined text-xl">shopping_cart</span>
                                 </button>
                             </div>

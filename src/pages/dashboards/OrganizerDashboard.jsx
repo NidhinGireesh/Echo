@@ -4,7 +4,7 @@ const OrganizerDashboard = () => {
     useEffect(() => {
         const glow = document.getElementById('cursor-glow');
         if (!glow) return;
-        
+
         const handleMouseMove = (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
@@ -17,7 +17,7 @@ const OrganizerDashboard = () => {
     return (
         <div className="flex-1 p-6 lg:p-10 max-w-7xl mx-auto w-full relative selection:bg-secondary/20">
             {/* Interactive Cursor Glow */}
-            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-secondary/10 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
+            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/20 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
 
             <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
                 <div>

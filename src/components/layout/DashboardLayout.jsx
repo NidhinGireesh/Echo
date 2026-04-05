@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { users } from '../../data/mockData';
+
+const user = users[0];
 
 const DashboardLayout = ({ children }) => {
     const location = useLocation();
@@ -35,7 +38,7 @@ const DashboardLayout = ({ children }) => {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <button className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-primary to-primary-dim text-[#070d1f] px-5 py-1.5 rounded-full text-sm font-black active:scale-95 transition-all shadow-lg shadow-primary/20">
+                    <button className="hidden sm:flex items-center gap-2 bg-gradient-to-br from-primary/30 to-[#070d1f] backdrop-blur-xl border border-white/10 text-white px-5 py-1.5 rounded-full text-xs font-black hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
                         <span className="material-symbols-outlined text-lg">bolt</span>
                         Create
                     </button>
@@ -50,7 +53,7 @@ const DashboardLayout = ({ children }) => {
                     </div>
                     <div className="w-px h-6 bg-white/10 mx-2"></div>
                     <Link to="/profile" className="flex items-center gap-3">
-                        <img src="https://i.pravatar.cc/150?u=aida" alt="User" className="w-8 h-8 rounded-full border border-primary/30 object-cover" />
+                        <img src={user.avatar} alt="User" className="w-8 h-8 rounded-full border border-primary/30 object-cover" />
                     </Link>
                 </div>
             </header>
@@ -72,8 +75,8 @@ const DashboardLayout = ({ children }) => {
                             to={item.path}
                             className={`flex items-center gap-3 py-3 px-4 rounded-xl font-bold transition-all duration-300 group shadow-sm ${
                                 isActive(item.path) 
-                                ? 'text-primary bg-[#1c253e] border border-primary/30 translate-x-1 shadow-lg shadow-[#070d1f]' 
-                                : 'text-on-surface-variant hover:text-white border border-transparent hover:bg-white/5'
+                                ? 'text-violet-400 bg-white/5 border border-violet-500/30 translate-x-1 shadow-lg shadow-violet-900/20' 
+                                : 'text-on-surface-variant hover:text-white border border-transparent hover:bg-white/5 hover:backdrop-blur-md'
                             }`}
                         >
                             <span className={`material-symbols-outlined ${isActive(item.path) ? 'fill-[1]' : 'group-hover:scale-110 transition-transform'}`}>
@@ -85,7 +88,7 @@ const DashboardLayout = ({ children }) => {
                 </nav>
 
                 <div className="mt-auto space-y-4 pt-6 border-t border-white/5">
-                    <button className="w-full bg-gradient-to-r from-primary to-primary-dim text-[#070d1f] font-black py-3 rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-2 shadow-lg shadow-primary/10">
+                    <button className="w-full bg-gradient-to-br from-primary/20 to-[#070d1f] backdrop-blur-xl border border-white/10 text-white font-black py-3 rounded-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/5">
                         <span className="material-symbols-outlined">add_circle</span>
                         <span>New Post</span>
                     </button>

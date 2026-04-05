@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { leaderboard } from '../data/mockData';
 
 const images = {
-  1: "https://i.pravatar.cc/150?u=col1",
-  2: "https://i.pravatar.cc/150?u=col2",
-  3: "https://i.pravatar.cc/150?u=col3",
-  4: "https://i.pravatar.cc/150?u=col4",
-  5: "https://i.pravatar.cc/150?u=col5",
-  6: "https://i.pravatar.cc/150?u=col6"
+  1: "https://upload.wikimedia.org/wikipedia/commons/1/15/College_of_Engineering%2C_Trivandrum_Main_Building.jpg",
+  2: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2066&auto=format&fit=crop",
+  3: "https://upload.wikimedia.org/wikipedia/commons/e/e4/Main_Entrance_of_NIT_Calicut_Central_Campus.jpg",
+  4: "https://images.unsplash.com/photo-1541339907198-e08756eaa589?q=80&w=2070&auto=format&fit=crop",
+  5: "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?q=80&w=1974&auto=format&fit=crop",
+  6: "https://images.unsplash.com/photo-1523050853064-8504f2f40058?q=80&w=2070&auto=format&fit=crop"
 };
 
 const LeaderboardPage = () => {
@@ -108,9 +108,10 @@ const LeaderboardPage = () => {
             {/* Standings List */}
             <div className="space-y-4 pb-20">
                 <div className="flex items-center justify-between px-4 mb-8">
-                    <h2 className="text-2xl font-black font-headline text-white tracking-tight">Node Hierarchy</h2>
+                    <span className="material-symbols-outlined text-violet-500 text-4xl mb-4">military_tech</span>
+                    <h1 className="text-5xl font-black font-headline text-white tracking-tighter mb-4">Astral <span className="text-violet-500">Registry</span></h1>
                     <div className="flex gap-2 font-black text-[8px] uppercase tracking-widest">
-                        <button className="px-5 py-2 rounded-full bg-primary text-[#070d1f] border border-primary/20">All Time</button>
+                        <button className="px-5 py-2 rounded-full bg-violet-500 text-[#070d1f] border border-violet-500/20">All Time</button>
                         <button className="px-5 py-2 rounded-full bg-white/5 text-on-surface-variant hover:bg-white/10 transition-colors">Current Cycle</button>
                     </div>
                 </div>
@@ -119,25 +120,30 @@ const LeaderboardPage = () => {
                     const isDormant = index % 3 === 0;
                     return (
                         <div key={item.rank} className="glass-panel p-5 flex items-center gap-6 group hover:translate-x-2 transition-all cursor-pointer">
-                            <span className="w-8 text-center font-black text-on-surface-variant group-hover:text-primary transition-colors text-xs">
+                            <span className="w-8 text-center font-black text-on-surface-variant group-hover:text-violet-500 transition-colors text-xs">
                                 {item.rank.toString().padStart(2, '0')}
                             </span>
                             <div className="w-12 h-12 rounded-xl overflow-hidden border border-white/10 shrink-0">
                                 <img src={images[(index % 3) + 4]} alt={item.name} className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all" />
                             </div>
                             <div className="flex-1">
-                                <h4 className="font-black text-white group-hover:text-primary transition-colors">{item.name}</h4>
-                                <div className="flex items-center gap-3 mt-1">
-                                    <span className={`text-[8px] uppercase font-black tracking-widest ${isDormant ? 'text-tertiary opacity-60' : 'text-secondary'}`}>
-                                        {isDormant ? 'Node Dormant' : 'Link Active'}
-                                    </span>
-                                    <span className="w-1 h-1 bg-white/10 rounded-full"></span>
-                                    <span className="text-[10px] text-on-surface-variant font-bold uppercase opacity-60">{item.students} Entities</span>
+                                <h4 className="font-black text-white group-hover:text-violet-500 transition-colors">{item.name}</h4>
+                                <div className="flex-1 space-y-2">
+                                    <div className="flex justify-between items-center text-xs font-black uppercase tracking-widest mb-1">
+                                        <span className="text-on-surface-variant opacity-60">Sync Progress</span>
+                                        <span className="text-violet-500">{item.score}%</span>
+                                    </div>
+                                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+                                        <div 
+                                            className="h-full bg-violet-500 rounded-full transition-all duration-1000 shadow-[0_0_12px_rgba(167,139,250,0.4)]"
+                                            style={{ width: `${item.score}%` }}
+                                        ></div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="text-right hidden sm:block shrink-0">
                                 <div className="font-headline font-black text-white">{item.points.toLocaleString()} pts</div>
-                                <div className={`text-[8px] flex items-center justify-end gap-1 font-black ${isDormant ? 'text-tertiary' : 'text-primary'}`}>
+                                <div className={`text-[8px] flex items-center justify-end gap-1 font-black ${isDormant ? 'text-tertiary' : 'text-violet-500'}`}>
                                     <span className="material-symbols-outlined text-xs">{isDormant ? 'trending_down' : 'trending_up'}</span>
                                     {isDormant ? '-3.2%' : '+5.4%'}
                                 </div>

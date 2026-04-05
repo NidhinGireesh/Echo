@@ -122,37 +122,15 @@ const MatchmakingSection = () => {
                             }}>
                                 <button
                                     onClick={() => handleNext(false)}
-                                    style={{
-                                        border: 'none',
-                                        background: 'rgba(255, 0, 0, 0.1)',
-                                        color: '#ff4444',
-                                        width: '50px',
-                                        height: '50px',
-                                        borderRadius: '50%',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        cursor: 'pointer'
-                                    }}
+                                    className="w-[60px] h-[60px] rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-on-surface-variant hover:bg-white/10 hover:border-white/20 active:scale-95 transition-all group shadow-xl"
                                 >
-                                    <X size={24} />
+                                    <X size={28} className="group-hover:rotate-90 transition-transform" />
                                 </button>
                                 <button
                                     onClick={() => handleNext(true)}
-                                    style={{
-                                        border: 'none',
-                                        background: 'rgba(0, 255, 128, 0.1)',
-                                        color: '#00cc66',
-                                        width: '50px',
-                                        height: '50px',
-                                        borderRadius: '50%',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        cursor: 'pointer'
-                                    }}
+                                    className="w-[60px] h-[60px] rounded-full bg-gradient-to-br from-primary/30 to-[#070d1f] backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all shadow-lg shadow-primary/20"
                                 >
-                                    <Heart size={24} fill="currentColor" />
+                                    <Heart size={28} fill="currentColor" />
                                 </button>
                             </div>
                         </Card>

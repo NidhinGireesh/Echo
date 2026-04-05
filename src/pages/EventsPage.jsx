@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { events } from '../data/mockData';
+import { events, users } from '../data/mockData';
 
 const EventsPage = () => {
     useEffect(() => {
@@ -52,8 +52,8 @@ const EventsPage = () => {
                             <h3 className="font-headline text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight drop-shadow-lg">{events[0]?.title || 'Tathva 2026'}</h3>
                             <p className="text-on-surface-variant text-lg mb-8 line-clamp-2">Join the top engineering minds shaping the future of Kerala's tech ecosystem.</p>
                             <div className="flex flex-wrap gap-4">
-                                <button className="px-8 py-3 bg-primary text-[#070d1f] font-black rounded-xl hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-95">Get Tickets</button>
-                                <button className="px-8 py-3 glass-panel text-on-surface font-bold rounded-xl border border-white/5 hover:bg-white/5 transition-all active:scale-95">Learn More</button>
+                                <button className="glass-button !px-8 !py-3">Get Tickets</button>
+                                <button className="glass-button !px-8 !py-3 !from-white/5 !to-transparent">Learn More</button>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@ const EventsPage = () => {
             <section className="space-y-8">
                 <div className="flex justify-between items-center">
                     <h2 className="font-headline text-2xl font-bold text-on-surface">Upcoming Club Events</h2>
-                    <button className="text-primary font-bold text-sm hover:underline uppercase tracking-widest">View All</button>
+                    <button className="text-primary font-black text-xs hover:text-white uppercase tracking-[0.2em] transition-colors">View All</button>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-auto">
                     {/* Large Feature Card */}
@@ -77,19 +77,19 @@ const EventsPage = () => {
                             </div>
                         </div>
                         <div className="space-y-4">
-                            <h4 className="font-headline text-2xl font-bold group-hover:text-primary transition-colors">{events[1]?.title || 'Drishti 2026'}</h4>
+                            <h4 className="font-headline text-2xl font-black group-hover:text-primary transition-colors duration-300">{events[1]?.title || 'Drishti 2026'}</h4>
                             <div className="flex items-center gap-4 text-on-surface-variant text-sm font-bold opacity-60">
                                 <span className="flex items-center gap-1.5"><span className="material-symbols-outlined text-lg">location_on</span> {events[1]?.college || 'CET Trivandrum'}</span>
                                 <span className="flex items-center gap-1.5"><span className="material-symbols-outlined text-lg">schedule</span> {events[1]?.date || '9:00 PM'}</span>
                             </div>
                             <div className="pt-4 flex justify-between items-center border-t border-white/5">
                                 <div className="flex -space-x-3">
-                                    {[1,2,3].map(i => (
-                                        <img key={i} alt="attendee" className="w-8 h-8 rounded-full border-2 border-[#070d1f]" src={`https://i.pravatar.cc/100?u=${i+10}`} />
+                                    {users.map(u => (
+                                        <img key={u.id} alt="attendee" className="w-8 h-8 rounded-full border-2 border-[#070d1f]" src={u.avatar} />
                                     ))}
                                     <div className="w-8 h-8 rounded-full border-2 border-[#070d1f] bg-white/5 flex items-center justify-center text-[10px] font-bold">+42</div>
                                 </div>
-                                <button className="p-3 bg-white/5 rounded-full hover:bg-primary/20 hover:text-[#070d1f] transition-all duration-300">
+                                <button className="p-3 bg-white/5 rounded-full hover:bg-primary/20 hover:text-white transition-all duration-300">
                                     <span className="material-symbols-outlined">arrow_forward</span>
                                 </button>
                             </div>
@@ -104,7 +104,7 @@ const EventsPage = () => {
                             <div className="flex flex-col justify-between py-1 flex-1">
                                 <div>
                                     <span className="text-tertiary text-[10px] font-black tracking-[0.2em] uppercase mb-2 block">{event.category}</span>
-                                    <h4 className="font-headline text-lg font-bold group-hover:text-tertiary transition-colors">{event.title}</h4>
+                                    <h4 className="font-headline text-lg font-black group-hover:text-primary transition-colors duration-300">{event.title}</h4>
                                     <p className="text-on-surface-variant text-xs mt-2 line-clamp-1 opacity-60 font-bold uppercase">{event.college}</p>
                                 </div>
                                 <div className="flex items-center gap-3">
