@@ -41,7 +41,6 @@ const Button = ({
         primary: {
             background: 'var(--primary)',
             color: 'white',
-            boxShadow: '0 4px 14px 0 var(--primary-glow)',
         },
         secondary: {
             background: 'var(--bg-subtle)',

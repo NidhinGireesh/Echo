@@ -1,28 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { projects } from '../data/mockData';
 import { Kawarp, useKawarp } from '@kawarp/react';
 
+const FeatureCard = React.memo(({ feature }) => (
+    <div className="glass-panel rounded-[2.5rem] p-10 hover:translate-y-[-8px] transition-all duration-500 group pointer-events-auto">
+        <div className={`w-16 h-16 rounded-2xl ${feature.bg} flex items-center justify-center mb-10 group-hover:scale-110 transition-transform`}>
+            <span className={`material-symbols-outlined ${feature.color} text-3xl`}>{feature.icon}</span>
+        </div>
+        <h3 className="text-2xl font-black font-headline mb-4 tracking-tight">{feature.title}</h3>
+        <p className="text-on-surface-variant font-medium leading-relaxed opacity-60">
+            {feature.desc}
+        </p>
+    </div>
+));
+
 const LandingPage = () => {
     const { ref } = useKawarp();
 
-    useEffect(() => {
-        const glow = document.getElementById('landing-cursor-glow');
-        if (!glow) return;
+    const features = useMemo(() => [
+        { icon: 'target', title: 'Event Hub', desc: 'Promote high-impact tech fests and workshops across institutions instantly.', color: 'text-primary', bg: 'bg-primary/10' },
+        { icon: 'token', title: 'Artifacts', desc: 'Securely trade project repositories and specialized digital assets.', color: 'text-secondary', bg: 'bg-secondary/10' },
+        { icon: 'hub', title: 'Neural Network', desc: 'Synchronize with specialized squad members for elite ventures.', color: 'text-tertiary', bg: 'bg-tertiary/10' }
+    ], []);
 
-        const handleMouseMove = (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
+    const trendingProjects = useMemo(() => projects.slice(0, 4), []);
 
     return (
         <div className="min-h-screen relative overflow-hidden bg-[#070d1f] text-white selection:bg-primary/30">
-            {/* Interactive Cursor Glow */}
-            <div id="landing-cursor-glow" className="fixed top-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full pointer-events-none z-[0] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[100px]"></div>
 
             {/* Background Liquid Orbs and Interactive Kawarp layer */}
             <div className="fixed inset-0 z-0 overflow-hidden bg-[#070d1f]">
@@ -59,20 +64,8 @@ const LandingPage = () => {
 
                 {/* Features Grid */}
                 <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
-                    {[
-                        { icon: 'target', title: 'Event Hub', desc: 'Promote high-impact tech fests and workshops across institutions instantly.', color: 'text-primary', bg: 'bg-primary/10' },
-                        { icon: 'token', title: 'Artifacts', desc: 'Securely trade project repositories and specialized digital assets.', color: 'text-secondary', bg: 'bg-secondary/10' },
-                        { icon: 'hub', title: 'Neural Network', desc: 'Synchronize with specialized squad members for elite ventures.', color: 'text-tertiary', bg: 'bg-tertiary/10' }
-                    ].map((feature, idx) => (
-                        <div key={idx} className="glass-panel rounded-[2.5rem] p-10 hover:translate-y-[-8px] transition-all duration-500 group pointer-events-auto">
-                            <div className={`w-16 h-16 rounded-2xl ${feature.bg} flex items-center justify-center mb-10 group-hover:scale-110 transition-transform`}>
-                                <span className={`material-symbols-outlined ${feature.color} text-3xl`}>{feature.icon}</span>
-                            </div>
-                            <h3 className="text-2xl font-black font-headline mb-4 tracking-tight">{feature.title}</h3>
-                            <p className="text-on-surface-variant font-medium leading-relaxed opacity-60">
-                                {feature.desc}
-                            </p>
-                        </div>
+                    {features.map((feature, idx) => (
+                        <FeatureCard key={idx} feature={feature} />
                     ))}
                 </section>
 
@@ -87,7 +80,7 @@ const LandingPage = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {projects.slice(0, 4).map((project, idx) => (
+                        {trendingProjects.map((project, idx) => (
                             <Link to="/discover" key={idx} className="glass-panel rounded-[2rem] overflow-hidden group hover:border-primary/40 transition-all pointer-events-auto block">
                                 <div className="aspect-[4/3] overflow-hidden relative">
                                     <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60" />

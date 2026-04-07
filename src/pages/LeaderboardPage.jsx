@@ -1,38 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { leaderboard } from '../data/mockData';
+import OptimizedCursorGlow from '../components/ui/OptimizedCursorGlow';
 
 const images = {
-  1: "https://upload.wikimedia.org/wikipedia/commons/1/15/College_of_Engineering%2C_Trivandrum_Main_Building.jpg",
+  1: "/assets/cet_leaderboard.jpg",
   2: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2066&auto=format&fit=crop",
-  3: "https://upload.wikimedia.org/wikipedia/commons/e/e4/Main_Entrance_of_NIT_Calicut_Central_Campus.jpg",
-  4: "https://images.unsplash.com/photo-1541339907198-e08756eaa589?q=80&w=2070&auto=format&fit=crop",
+  3: "/assets/nitc_leaderboard.jpg",
+  4: "/assets/cusat_leaderboard.jpg",
   5: "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?q=80&w=1974&auto=format&fit=crop",
   6: "https://images.unsplash.com/photo-1523050853064-8504f2f40058?q=80&w=2070&auto=format&fit=crop"
 };
 
 const LeaderboardPage = () => {
-    useEffect(() => {
-        const glow = document.getElementById('cursor-glow');
-        if (!glow) return;
-        
-        const handleMouseMove = (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
-
-    const top1 = leaderboard.find(l => l.rank === 1);
-    const top2 = leaderboard.find(l => l.rank === 2);
-    const top3 = leaderboard.find(l => l.rank === 3);
-    const remainingList = leaderboard.filter(l => l.rank > 3);
+    const top1 = useMemo(() => leaderboard.find(l => l.rank === 1), []);
+    const top2 = useMemo(() => leaderboard.find(l => l.rank === 2), []);
+    const top3 = useMemo(() => leaderboard.find(l => l.rank === 3), []);
+    const remainingList = useMemo(() => leaderboard.filter(l => l.rank > 3), []);
 
     return (
         <div className="flex-1 p-6 md:p-12 relative overflow-hidden selection:bg-primary/20 max-w-7xl mx-auto">
-            {/* Interactive Cursor Glow */}
-            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
+            <OptimizedCursorGlow />
 
             <header className="mb-16">
                 <div className="flex items-center gap-3 mb-3">
@@ -53,7 +40,7 @@ const LeaderboardPage = () => {
                 {top2 && (
                     <div className="glass-panel p-8 md:h-[360px] flex flex-col items-center justify-end group hover:bg-white/5 transition-all">
                         <div className="relative mb-8">
-                            <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-secondary/40 rotate-3 group-hover:rotate-0 transition-transform shadow-xl">
+                            <div className="w-24 h-24 rounded-2xl overflow-hidden border-2 border-secondary/40 rotate-3 group-hover:rotate-0 transition-transform shadow-xl">
                                 <img src={images[2]} alt={top2.name} className="w-full h-full object-cover" />
                             </div>
                             <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-[#070d1f] rounded-full flex items-center justify-center border-2 border-secondary text-secondary font-black text-xs">2</div>
@@ -91,7 +78,7 @@ const LeaderboardPage = () => {
                 {top3 && (
                     <div className="glass-panel p-8 md:h-[320px] flex flex-col items-center justify-end group hover:bg-white/5 transition-all">
                         <div className="relative mb-8">
-                            <div className="w-18 h-18 rounded-2xl overflow-hidden border-2 border-tertiary/40 -rotate-3 group-hover:rotate-0 transition-transform shadow-xl">
+                            <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-tertiary/40 -rotate-3 group-hover:rotate-0 transition-transform shadow-xl">
                                 <img src={images[3]} alt={top3.name} className="w-full h-full object-cover" />
                             </div>
                             <div className="absolute -bottom-2 -right-2 w-7 h-7 bg-[#070d1f] rounded-full flex items-center justify-center border-2 border-tertiary text-tertiary font-black text-xs">3</div>

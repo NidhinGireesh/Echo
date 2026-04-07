@@ -1,24 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { users } from '../data/mockData';
+import OptimizedCursorGlow from '../components/ui/OptimizedCursorGlow';
 
 const DiscoverPage = () => {
-    useEffect(() => {
-        const glow = document.getElementById('cursor-glow');
-        if (!glow) return;
-
-        const handleMouseMove = (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
-
     return (
         <div className="p-6 lg:p-12 relative w-full overflow-hidden max-w-7xl mx-auto">
-            {/* Interactive Cursor Glow */}
-            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/20 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
+            <OptimizedCursorGlow className="bg-primary/20" />
 
             {/* Hero Section */}
             <section className="mb-16">
@@ -83,8 +70,12 @@ const DiscoverPage = () => {
                     </div>
 
                     <div className="glass-panel overflow-hidden group border border-white/10 backdrop-blur-xl">
-                        <div className="h-32 w-full bg-surface-container-highest flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <span className="material-symbols-outlined text-4xl opacity-20">inventory_2</span>
+                        <div className="h-32 w-full overflow-hidden">
+                            <img 
+                                src="/assets/ktu.png" 
+                                alt="KTU Result Scraper API" 
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            />
                         </div>
                         <div className="p-6">
                             <h3 className="text-xl font-headline font-bold mb-2">KTU Result Scraper API</h3>

@@ -1,28 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { projects } from '../../data/mockData';
+import OptimizedCursorGlow from '../../components/ui/OptimizedCursorGlow';
 
 const ProjectDetail = () => {
     const { id } = useParams();
     const project = projects.find(p => p.id === parseInt(id)) || projects[0];
 
-    useEffect(() => {
-        const glow = document.getElementById('cursor-glow');
-        if (!glow) return;
-        
-        const handleMouseMove = (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
-
     return (
         <div className="flex-1 p-6 md:p-12 relative overflow-hidden selection:bg-primary/20 max-w-7xl mx-auto z-10 w-full">
-            {/* Interactive Cursor Glow */}
-            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
+            <OptimizedCursorGlow />
 
             <Link to="/marketplace" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant hover:text-white transition-colors mb-12">
                 <span className="material-symbols-outlined text-sm">arrow_back</span>
@@ -89,7 +76,7 @@ const ProjectDetail = () => {
                         <div className="relative z-10">
                             <div className="text-5xl font-black font-headline text-white mb-8 tracking-tighter">{project.price} <span className="text-primary text-xl">🜚</span></div>
                             <div className="space-y-3">
-                                <button className="w-full bg-primary text-[#070d1f] py-4 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">Aquire License</button>
+                                <button className="w-full bg-primary text-[#070d1f] py-4 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:scale-[1.02] active:scale-95 transition-all">Aquire License</button>
                                 <button className="w-full glass-panel border border-white/10 py-4 rounded-2xl font-black text-xs uppercase tracking-[0.2em] text-white hover:bg-white/5 transition-all">Simulate Preview</button>
                             </div>
                             <div className="mt-8 flex items-center justify-center gap-2 text-[9px] font-black uppercase tracking-widest text-on-surface-variant opacity-40">

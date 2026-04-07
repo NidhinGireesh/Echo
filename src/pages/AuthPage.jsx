@@ -1,21 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import OptimizedCursorGlow from '../components/ui/OptimizedCursorGlow';
 
 const AuthPage = () => {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const glow = document.getElementById('cursor-glow');
-        if (!glow) return;
-        
-        const handleMouseMove = (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
 
     const handleLogin = () => {
         navigate('/dashboard/student');
@@ -23,8 +11,7 @@ const AuthPage = () => {
 
     return (
         <div className="flex items-center justify-center min-h-[calc(100vh-80px)] relative p-6 selection:bg-primary/20">
-            {/* Interactive Cursor Glow */}
-            <div id="cursor-glow" className="fixed top-0 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full pointer-events-none z-[0] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[100px]"></div>
+            <OptimizedCursorGlow className="w-[500px] h-[500px] bg-primary/10 blur-[100px]" />
 
             <main className="w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center relative z-10">
                 {/* Brand Side */}
@@ -64,7 +51,7 @@ const AuthPage = () => {
                         {/* Google Login */}
                         <button 
                             onClick={handleLogin}
-                            className="w-full py-5 px-8 flex items-center justify-center gap-4 bg-white text-[#070d1f] rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-white/5"
+                            className="w-full py-5 px-8 flex items-center justify-center gap-4 bg-white text-[#070d1f] rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all"
                         >
                             <img className="w-6 h-6 grayscale" src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" alt="Google" />
                             <span>Continue with Google</span>

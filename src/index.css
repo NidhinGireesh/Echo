@@ -21,7 +21,8 @@
 @layer base {
   body {
     @apply bg-surface text-on-surface font-body;
-    overflow-x: hidden; /* Prevent overall page jitter */
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
     width: 100vw;
   }
 }
@@ -45,6 +46,7 @@
     backdrop-filter: blur(24px);
     border: 1px solid rgba(223, 228, 254, 0.1);
     @apply rounded-3xl transition-all duration-300;
+    will-change: transform, opacity;
   }
 
   .bento-grid {
@@ -64,7 +66,7 @@
   }
 
   .glass-button {
-    @apply px-12 py-5 bg-gradient-to-br from-primary/20 via-primary/5 to-[#070d1f] backdrop-blur-xl border border-white/10 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_8px_32px_rgba(167,139,250,0.15)] text-center relative overflow-hidden;
+    @apply px-12 py-5 bg-gradient-to-br from-primary/20 via-primary/5 to-[#070d1f] backdrop-blur-xl border border-white/10 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 active:scale-95 transition-all text-center relative overflow-hidden;
   }
   .glass-button::after {
     content: '';
@@ -72,6 +74,36 @@
   }
   .glass-button:hover::after {
     @apply opacity-100;
+  }
+
+  .glass-violet {
+    background: rgba(167, 139, 250, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    @apply rounded-2xl transition-all duration-300 relative overflow-hidden text-white font-black uppercase tracking-widest;
+  }
+
+  .glass-violet::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 transition-opacity duration-500;
+  }
+
+  .glass-violet:hover::before {
+    @apply opacity-100;
+  }
+
+  .glass-violet:hover {
+    @apply scale-[1.02] border-primary/50;
+    background: rgba(167, 139, 250, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(167, 139, 250, 0.2);
+  }
+
+  .glass-violet-active {
+    background: rgba(167, 139, 250, 0.4);
+    border: 1px solid rgba(167, 139, 250, 0.6);
+    box-shadow: 0 0 20px rgba(167, 139, 250, 0.4);
+    @apply scale-[0.98];
   }
 
   .orb {

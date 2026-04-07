@@ -1,26 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { users, projects } from '../data/mockData';
+import OptimizedCursorGlow from '../components/ui/OptimizedCursorGlow';
 
 const ProfilePage = () => {
-    useEffect(() => {
-        const glow = document.getElementById('cursor-glow');
-        if (!glow) return;
-        
-        const handleMouseMove = (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
-
     const currentUser = users[0];
 
     return (
         <div className="flex-1 p-8 overflow-y-auto relative z-10 selection:bg-primary/20">
-            {/* Interactive Cursor Glow */}
-            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
+            <OptimizedCursorGlow />
 
             <div className="max-w-7xl mx-auto space-y-12">
                 {/* Hero Profile Section */}

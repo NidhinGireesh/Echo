@@ -1,26 +1,70 @@
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { users } from '../../data/mockData';
+import OptimizedCursorGlow from '../../components/ui/OptimizedCursorGlow';
 
 const user = users[0];
 
+const ActionButton = React.memo(({ action }) => (
+    <Link to={action.path} className="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-primary/30 hover:bg-primary/5 transition-all group backdrop-blur-md">
+        <div className={`w-12 h-12 rounded-full ${action.bg} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+            <span className={`material-symbols-outlined ${action.color}`}>{action.icon}</span>
+        </div>
+        <span className="text-xs font-bold uppercase tracking-tighter opacity-80">{action.label}</span>
+    </Link>
+));
+
+const SkillItem = React.memo(({ skill }) => (
+    <div>
+        <div className="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 opacity-60">
+            <span>{skill.name}</span>
+            <span className={skill.text}>{skill.level}</span>
+        </div>
+        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+            <div className={`h-full ${skill.color} rounded-full shadow-[0_0_12px_rgba(167,139,250,0.3)]`} style={{ width: `${skill.fill}%` }}></div>
+        </div>
+    </div>
+));
+
+const ActivityItem = React.memo(({ activity }) => (
+    <div className="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-colors group cursor-pointer border border-transparent hover:border-white/5">
+        <div className="w-10 h-10 rounded-xl bg-surface-container-highest/50 flex items-center justify-center border border-white/5">
+            <span className="material-symbols-outlined text-on-surface-variant">rocket</span>
+        </div>
+        <div className="flex-1">
+            <h5 className="font-bold text-sm">{activity.title}</h5>
+            <p className="text-xs text-on-surface-variant opacity-60">{activity.desc}</p>
+        </div>
+        <div className="text-right">
+            <p className="text-[10px] font-black text-on-surface uppercase opacity-40">{activity.time}</p>
+            <span className={`text-[10px] font-bold ${activity.color}`}>{activity.tag}</span>
+        </div>
+    </div>
+));
+
 const StudentDashboard = () => {
-    useEffect(() => {
-        const glow = document.getElementById('cursor-glow');
-        if (!glow) return;
+    const actions = useMemo(() => [
+        { icon: 'upload_file', label: 'Mint Asset', color: 'text-primary', bg: 'bg-primary/10', path: '/mint' },
+        { icon: 'groups', label: 'Join Squad', color: 'text-secondary', bg: 'bg-secondary/10', path: '/squad' },
+        { icon: 'rocket_launch', label: 'Launch Lab', color: 'text-tertiary', bg: 'bg-tertiary/10', path: '/launch' },
+        { icon: 'payments', label: 'Withdraw', color: 'text-primary-fixed', bg: 'bg-primary-fixed/10', path: '/withdraw' },
+    ], []);
 
-        const handleMouseMove = (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        };
+    const skills = useMemo(() => user.skills || [
+        { name: 'Full-Stack Development', level: '88%', fill: 88, color: 'bg-primary', text: 'text-primary' },
+        { name: 'UI/UX Design', level: '64%', fill: 64, color: 'bg-secondary', text: 'text-secondary' },
+        { name: 'Project Management', level: '42%', fill: 42, color: 'bg-tertiary', text: 'text-tertiary' }
+    ], []);
 
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
+    const activities = useMemo(() => [
+        { title: 'Syllabus Update Shared', desc: 'KTU 2024 Scheme uploaded to main network.', time: '2m ago', tag: '#academics', color: 'text-primary' },
+        { title: 'Collaboration Request', desc: 'MEC TinkerHub wants you for "HackForKerala".', time: '1h ago', tag: '#teams', color: 'text-secondary' },
+        { title: 'Sale Confirmed', desc: '"Malayalam NLP Dataset" sold for 120 🜚.', time: '4h ago', tag: '#sales', color: 'text-tertiary' }
+    ], []);
 
     return (
         <div className="flex-1 p-6 lg:p-10 max-w-7xl mx-auto w-full relative">
-            {/* Interactive Cursor Glow */}
-            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/20 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
+            <OptimizedCursorGlow />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
                 {/* Welcome Tile (Wide) */}
@@ -66,25 +110,30 @@ const StudentDashboard = () => {
                         <h3 className="font-headline font-bold text-lg">Featured Asset</h3>
                         <span className="material-symbols-outlined text-on-surface-variant cursor-pointer">more_horiz</span>
                     </div>
-                    <div className="relative aspect-square rounded-2xl overflow-hidden mb-6 group">
-                        <img alt="Tourism UI Blueprint" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=2070&auto=format&fit=crop" />
-                        <div className="absolute top-4 right-4 bg-surface/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-primary border border-primary/20 uppercase tracking-widest">
-                            Hot Deal
+                    <div className="relative h-[320px] md:h-[400px] rounded-2xl overflow-hidden mb-6 group">
+                        <img 
+                            alt="K-Rail Realtime Tracker" 
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                            src="/assets/krail.png"
+                            loading="lazy"
+                        />
+                        <div className="absolute top-4 right-4 bg-primary/20 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-primary border border-primary/20 uppercase tracking-widest">
+                            Realtime
                         </div>
                     </div>
                     <div className="flex-1">
-                        <h4 className="font-headline font-extrabold text-xl mb-1">Kerala Tourism UI Kit</h4>
-                        <p className="text-sm text-on-surface-variant mb-6 leading-relaxed">Premium modular design system for building dynamic tourism apps.</p>
+                        <h4 className="font-headline font-extrabold text-xl mb-1">K-Rail Tracker [BETA]</h4>
+                        <p className="text-sm text-on-surface-variant mb-6 leading-relaxed">Real-time GPS monitoring and passenger density analytics for the Silver Line project.</p>
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center -space-x-3">
                                 <img alt="Contributor" className="w-8 h-8 rounded-full border-2 border-surface" src={users[0].avatar} />
                                 <img alt="Contributor" className="w-8 h-8 rounded-full border-2 border-surface" src={users[1].avatar} />
                                 <div className="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-surface flex items-center justify-center text-[10px] font-bold">+12</div>
                             </div>
-                            <span className="font-headline font-black text-xl text-primary">450 🜚</span>
+                            <span className="font-headline font-black text-xl text-primary">FREE</span>
                         </div>
                         <button className="glass-button !w-full !py-3 !text-xs">
-                            Purchase License
+                            View Live Map
                         </button>
                     </div>
                 </section>
@@ -93,18 +142,8 @@ const StudentDashboard = () => {
                 <section className="col-span-12 md:col-span-6 lg:col-span-6 glass-panel p-6">
                     <h3 className="font-headline font-bold text-lg mb-6">Quick Actions</h3>
                     <div className="grid grid-cols-2 gap-4">
-                        {[
-                            { icon: 'upload_file', label: 'Mint Asset', color: 'text-primary', bg: 'bg-primary/10' },
-                            { icon: 'groups', label: 'Join Squad', color: 'text-secondary', bg: 'bg-secondary/10' },
-                            { icon: 'rocket_launch', label: 'Launch Lab', color: 'text-tertiary', bg: 'bg-tertiary/10' },
-                            { icon: 'payments', label: 'Withdraw', color: 'text-primary-fixed', bg: 'bg-primary-fixed/10' },
-                        ].map((action, i) => (
-                            <button key={i} className="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-primary/30 transition-all group backdrop-blur-md">
-                                <div className={`w-12 h-12 rounded-full ${action.bg} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
-                                    <span className={`material-symbols-outlined ${action.color}`}>{action.icon}</span>
-                                </div>
-                                <span className="text-xs font-bold uppercase tracking-tighter opacity-80">{action.label}</span>
-                            </button>
+                        {actions.map((action, i) => (
+                            <ActionButton key={i} action={action} />
                         ))}
                     </div>
                 </section>
@@ -116,20 +155,8 @@ const StudentDashboard = () => {
                         <span className="text-xs text-primary font-black uppercase tracking-widest">LVL {user.level || 24}</span>
                     </div>
                     <div className="space-y-6">
-                        {(user.skills || [
-                            { name: 'Full-Stack Development', level: '88%', fill: 88, color: 'bg-primary', text: 'text-primary' },
-                            { name: 'UI/UX Design', level: '64%', fill: 64, color: 'bg-secondary', text: 'text-secondary' },
-                            { name: 'Project Management', level: '42%', fill: 42, color: 'bg-tertiary', text: 'text-tertiary' }
-                        ]).map((skill, idx) => (
-                            <div key={idx}>
-                                <div className="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 opacity-60">
-                                    <span>{skill.name}</span>
-                                    <span className={skill.text}>{skill.level}</span>
-                                </div>
-                                <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div className={`h-full ${skill.color} rounded-full shadow-[0_0_12px_rgba(167,139,250,0.3)]`} style={{ width: `${skill.fill}%` }}></div>
-                                </div>
-                            </div>
+                        {skills.map((skill, idx) => (
+                            <SkillItem key={idx} skill={skill} />
                         ))}
                     </div>
                     <div className="mt-8 p-4 rounded-2xl bg-white/5 flex items-center justify-between border border-white/5">
@@ -151,24 +178,8 @@ const StudentDashboard = () => {
                         </div>
                     </div>
                     <div className="space-y-4">
-                        {[
-                            { title: 'Syllabus Update Shared', desc: 'KTU 2024 Scheme uploaded to main network.', time: '2m ago', tag: '#academics', color: 'text-primary' },
-                            { title: 'Collaboration Request', desc: 'MEC TinkerHub wants you for "HackForKerala".', time: '1h ago', tag: '#teams', color: 'text-secondary' },
-                            { title: 'Sale Confirmed', desc: '"Malayalam NLP Dataset" sold for 120 🜚.', time: '4h ago', tag: '#sales', color: 'text-tertiary' }
-                        ].map((activity, i) => (
-                            <div key={i} className="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-colors group cursor-pointer border border-transparent hover:border-white/5">
-                                <div className="w-10 h-10 rounded-xl bg-surface-container-highest/50 flex items-center justify-center border border-white/5">
-                                    <span className="material-symbols-outlined text-on-surface-variant">rocket</span>
-                                </div>
-                                <div className="flex-1">
-                                    <h5 className="font-bold text-sm">{activity.title}</h5>
-                                    <p className="text-xs text-on-surface-variant opacity-60">{activity.desc}</p>
-                                </div>
-                                <div className="text-right">
-                                    <p className="text-[10px] font-black text-on-surface uppercase opacity-40">{activity.time}</p>
-                                    <span className={`text-[10px] font-bold ${activity.color}`}>{activity.tag}</span>
-                                </div>
-                            </div>
+                        {activities.map((activity, i) => (
+                            <ActivityItem key={i} activity={activity} />
                         ))}
                     </div>
                 </section>

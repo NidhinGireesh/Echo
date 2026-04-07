@@ -1,26 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { users } from '../data/mockData';
+import OptimizedCursorGlow from '../components/ui/OptimizedCursorGlow';
 
 const MessagingPage = () => {
-    useEffect(() => {
-        const glow = document.getElementById('cursor-glow');
-        if (!glow) return;
-        
-        const handleMouseMove = (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
-
     const currentUser = users[0];
 
     return (
         <div className="flex h-[calc(100vh-64px)] w-full overflow-hidden relative z-10 font-body selection:bg-primary/20">
-            {/* Interactive Cursor Glow */}
-            <div id="cursor-glow" className="fixed top-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2 mix-blend-screen blur-[80px]"></div>
+            <OptimizedCursorGlow />
 
             {/* Left Pane: Inbox */}
             <aside className="w-80 lg:w-96 flex-shrink-0 border-r border-white/5 flex flex-col bg-[#070d1f]/40 backdrop-blur-2xl">
