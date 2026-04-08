@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { users } from '../../data/mockData';
 import SmoothScroll from './SmoothScroll';
 
@@ -8,6 +9,7 @@ const user = users[0];
 const DashboardLayout = ({ children }) => {
     const location = useLocation();
     const [isEventsOpen, setIsEventsOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const isActive = (path) => location.pathname === path || location.pathname.startsWith(path + '/');
 
     const navItems = [
@@ -50,9 +52,17 @@ const DashboardLayout = ({ children }) => {
                     <div className="orb w-[400px] h-[400px] bg-tertiary/5 top-[40%] left-[50%] animation-delay-[-10s]"></div>
                 </div>
 
-                {/* TopNavBar remains the same */}
+                {/* TopNavBar */}
                 <header className="fixed top-0 left-0 right-0 h-16 z-[60] bg-[#070d1f]/40 backdrop-blur-2xl border-b border-white/5 flex items-center justify-between px-6">
-                    <div className="flex items-center gap-8 flex-1">
+                    <div className="flex items-center gap-4 flex-1">
+                        {/* Mobile Menu Toggle */}
+                        <button 
+                            className="lg:hidden p-2 text-white hover:bg-white/5 rounded-lg transition-colors"
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        >
+                            <span className="material-symbols-outlined">{isMenuOpen ? 'close' : 'menu'}</span>
+                        </button>
+
                         <Link to="/" className="flex items-center gap-3 group">
                             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-[#070d1f]">
                                 <span className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>cloud_queue</span>
@@ -91,8 +101,105 @@ const DashboardLayout = ({ children }) => {
                     </div>
                 </header>
 
-                {/* SideNavBar */}
+                {/* Mobile Menu Overlay */}
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="fixed inset-0 bg-[#070d1f]/60 backdrop-blur-md z-[70] lg:hidden"
+                                onClick={() => setIsMenuOpen(false)}
+                            />
+                            <motion.div
+                                initial={{ x: '-100%' }}
+                                animate={{ x: 0 }}
+                                exit={{ x: '-100%' }}
+                                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                                className="fixed inset-y-0 left-0 w-full max-w-[280px] bg-[#0c1326] z-[80] lg:hidden flex flex-col pt-20 px-4 border-r border-white/5 shadow-2xl"
+                            >
+                                <nav className="flex-1 space-y-1 overflow-y-auto pb-8">
+                                    {navItems.map((item) => (
+                                        <Link 
+                                            key={item.path}
+                                            to={item.path}
+                                            onClick={() => setIsMenuOpen(false)}
+                                            className={`flex items-center gap-3 py-3 px-4 rounded-xl font-bold transition-all ${
+                                                isActive(item.path) 
+                                                ? 'text-primary bg-white/5 border border-primary/20' 
+                                                : 'text-on-surface-variant hover:text-white'
+                                            }`}
+                                        >
+                                            <span className="material-symbols-outlined">{item.icon}</span>
+                                            <span className="text-sm">{item.label}</span>
+                                        </Link>
+                                    ))}
+
+                                    {/* Events Dropdown for Mobile */}
+                                    <div className="flex flex-col">
+                                        <button 
+                                            onClick={() => setIsEventsOpen(!isEventsOpen)}
+                                            className={`w-full flex items-center justify-between py-3 px-4 rounded-xl font-bold transition-all ${
+                                                isActive('/events') || isEventsOpen ? 'text-primary' : 'text-on-surface-variant'
+                                            }`}
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                <span className="material-symbols-outlined">calendar_today</span>
+                                                <span className="text-sm">Events</span>
+                                            </div>
+                                            <span className={`material-symbols-outlined text-sm transition-transform ${isEventsOpen ? 'rotate-180' : ''}`}>expand_more</span>
+                                        </button>
+                                        <AnimatePresence>
+                                            {isEventsOpen && (
+                                                <motion.div
+                                                    initial={{ height: 0, opacity: 0 }}
+                                                    animate={{ height: 'auto', opacity: 1 }}
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    className="overflow-hidden ml-6 border-l border-white/10 pl-2 space-y-1"
+                                                >
+                                                    {eventSubItems.map((sub) => (
+                                                        <Link
+                                                            key={sub.path}
+                                                            to={sub.path}
+                                                            onClick={() => setIsMenuOpen(false)}
+                                                            className={`flex items-center gap-3 py-2 px-4 rounded-lg text-xs font-bold ${
+                                                                isActive(sub.path) ? 'text-primary bg-white/5' : 'text-on-surface-variant/70'
+                                                            }`}
+                                                        >
+                                                            <span className="material-symbols-outlined text-lg">{sub.icon}</span>
+                                                            {sub.label}
+                                                        </Link>
+                                                    ))}
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+
+                                    {bottomNavItems.map((item) => (
+                                        <Link 
+                                            key={item.path}
+                                            to={item.path}
+                                            onClick={() => setIsMenuOpen(false)}
+                                            className={`flex items-center gap-3 py-3 px-4 rounded-xl font-bold transition-all ${
+                                                isActive(item.path) 
+                                                ? 'text-primary bg-white/5 border border-primary/20' 
+                                                : 'text-on-surface-variant hover:text-white'
+                                            }`}
+                                        >
+                                            <span className="material-symbols-outlined">{item.icon}</span>
+                                            <span className="text-sm">{item.label}</span>
+                                        </Link>
+                                    ))}
+                                </nav>
+                            </motion.div>
+                        </>
+                    )}
+                </AnimatePresence>
+
+                {/* SideNavBar (Desktop) */}
                 <aside className="fixed left-0 top-0 h-full w-64 z-50 bg-[#0c1326]/40 backdrop-blur-2xl border-r border-white/5 hidden lg:flex flex-col py-8 px-4 pt-24">
+                    {/* ... (Existing SideNavBar code remains unchanged) ... */}
                     <nav className="flex-1 space-y-1">
                         {navItems.map((item) => (
                             <Link 
