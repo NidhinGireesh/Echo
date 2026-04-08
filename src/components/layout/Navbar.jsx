@@ -87,52 +87,166 @@ const Navbar = () => {
 
                 {/* Mobile Toggle */}
                 <button
-                    className="md:hidden p-2 text-white"
+                    className="md:hidden p-2 text-white relative z-[110]"
                     onClick={() => setIsOpen(!isOpen)}
+                    aria-label="Toggle Menu"
                 >
-                    {isOpen ? <X size={24} /> : <Menu size={24} />}
+                    <motion.div
+                        animate={{ rotate: isOpen ? 90 : 0 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                    >
+                        {isOpen ? <X size={28} /> : <Menu size={28} />}
+                    </motion.div>
                 </button>
             </div>
 
-            {/* Mobile Menu */}
-            <AnimatePresence>
+            {/* Mobile Menu Overlay */}
+            <AnimatePresence mode="wait">
                 {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="fixed inset-0 top-20 bg-[#070d1f] z-[90] p-6 flex flex-col gap-6"
-                    >
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.path}
-                                to={link.path}
-                                onClick={() => setIsOpen(false)}
-                                className="text-2xl font-headline font-black text-white border-b border-white/5 pb-4"
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
-                        <div className="mt-4 flex flex-col gap-4">
-                            <Link 
-                                to="/login" 
-                                onClick={() => setIsOpen(false)}
-                                className="w-full py-4 text-center border border-white/10 rounded-2xl font-bold text-white"
-                            >
-                                Log in
-                            </Link>
-                            <Link 
-                                to="/signup" 
-                                onClick={() => setIsOpen(false)}
-                                className="w-full py-4 text-center bg-gradient-to-br from-secondary/40 to-[#070d1f]/40 backdrop-blur-xl border border-white/10 rounded-2xl font-black text-white"
-                            >
-                                Get Started
-                            </Link>
-                        </div>
-                    </motion.div>
+                    <>
+                        {/* Backdrop for closing */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 bg-[#070d1f]/60 backdrop-blur-md z-[80] md:hidden"
+                            onClick={() => setIsOpen(false)}
+                        />
+                        
+                        <motion.div
+                            initial={{ x: '100%', opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            exit={{ x: '100%', opacity: 0 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                            className="fixed inset-y-0 right-0 w-full max-w-[320px] bg-[#070d1f] z-[90] flex flex-col md:hidden shadow-2xl border-l border-white/5"
+                        >
+                            <div className="flex flex-col h-full pt-20 pb-8 px-6 overflow-y-auto">
+                                <nav className="flex flex-col gap-2">
+                                    {navLinks.map((link) => (
+                                        <MobileNavLink 
+                                            key={link.path}
+                                            link={link}
+                                            hasSubmenu={link.name === 'Events'}
+                                            isActive={location.pathname === link.path}
+                                            onClose={() => setIsOpen(false)}
+                                        />
+                                    ))}
+                                </nav>
+
+                                <div className="mt-auto pt-8 border-t border-white/5 space-y-4">
+                                    <Link 
+                                        to="/login" 
+                                        onClick={() => setIsOpen(false)}
+                                        className="w-full py-4 text-center border border-white/10 rounded-2xl font-bold text-white block hover:bg-white/5 transition-colors"
+                                    >
+                                        Log in
+                                    </Link>
+                                    <Link 
+                                        to="/signup" 
+                                        onClick={() => setIsOpen(false)}
+                                        className="w-full py-4 text-center bg-gradient-to-br from-primary to-secondary border border-white/10 rounded-2xl font-black text-[#070d1f] block shadow-[0_8px_32px_rgba(var(--color-primary),0.2)]"
+                                    >
+                                        Get Started
+                                    </Link>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </>
                 )}
             </AnimatePresence>
         </nav>
+    );
+};
+
+// Helper component for Mobile Nav Links with Accordion support
+const MobileNavLink = ({ link, hasSubmenu, isActive, onClose }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    
+    // Sub-items for Events as seen in DashboardLayout
+    const eventSubItems = [
+        { label: 'Gaming', path: '/gaming' },
+        { label: 'STEM', path: '/stem' },
+        { label: 'Creative', path: '/creative' },
+        { label: 'Lifestyle', path: '/lifestyle' },
+    ];
+
+    if (hasSubmenu) {
+        return (
+            <div className="flex flex-col mb-2">
+                <div className={`flex items-center w-full justify-between rounded-2xl transition-all ${isExpanded ? 'bg-white/5' : ''}`}>
+                    <Link
+                        to={link.path}
+                        onClick={onClose}
+                        className={`flex-1 py-4 px-4 text-xl font-headline font-black transition-all ${
+                            isActive ? 'text-primary' : 'text-white'
+                        }`}
+                    >
+                        {link.name}
+                    </Link>
+                    <button 
+                        onClick={() => setIsExpanded(!isExpanded)}
+                        className="p-4 text-on-surface-variant hover:text-white transition-colors"
+                        aria-label="Toggle Submenu"
+                    >
+                        <motion.div
+                            animate={{ rotate: isExpanded ? 180 : 0 }}
+                            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                            <span className="material-symbols-outlined select-none">expand_more</span>
+                        </motion.div>
+                    </button>
+                </div>
+                
+                <AnimatePresence>
+                    {isExpanded && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                            className="overflow-hidden"
+                        >
+                            <div className="pt-2 pb-4 flex flex-col gap-1">
+                                {eventSubItems.map((sub) => (
+                                    <Link
+                                        key={sub.path}
+                                        to={sub.path}
+                                        onClick={onClose}
+                                        className="py-3 px-10 text-sm font-bold text-on-surface-variant hover:text-white transition-colors border-l-2 border-white/5 ml-6 hover:border-primary/50"
+                                    >
+                                        {sub.label}
+                                    </Link>
+                                ))}
+                                <Link
+                                    to={link.path}
+                                    onClick={onClose}
+                                    className="py-3 px-10 text-sm font-black text-primary hover:text-white transition-colors border-l-2 border-white/5 ml-6 hover:border-primary/50"
+                                >
+                                    View All Events
+                                </Link>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+                <div className="h-px bg-white/5 mx-4 mt-2" />
+            </div>
+        );
+    }
+
+    return (
+        <div className="flex flex-col mb-2">
+            <Link
+                to={link.path}
+                onClick={onClose}
+                className={`w-full py-4 px-4 text-xl font-headline font-black transition-all flex items-center justify-between rounded-2xl ${
+                    isActive ? 'text-primary bg-white/5' : 'text-white hover:bg-white/5'
+                }`}
+            >
+                {link.name}
+                {isActive && <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_15px_rgba(var(--color-primary),0.8)]" />}
+            </Link>
+            <div className="h-px bg-white/5 mx-4 mt-2" />
+        </div>
     );
 };
 
